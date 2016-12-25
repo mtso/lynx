@@ -2,8 +2,6 @@ package lynx
 
 import (
 	"log"
-	// "fmt"
-	// "errors"
 	"io/ioutil"
 	"os"
 	"strings"
