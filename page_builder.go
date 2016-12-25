@@ -75,3 +75,16 @@ func BuildPagesIn(dirname string, exportDir string) {
 	}
 
 }
+
+func isMarkdownFilename(filename string) bool {
+	switch {
+	case strings.HasSuffix(filename, ".md"):
+		fallthrough
+	case strings.HasSuffix(filename, ".mdown"):
+		fallthrough
+	case strings.HasSuffix(filename, ".markdown"):
+		return true
+	default:
+		return false
+	}
+}
