@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	lynx.PrintSections()
+	lynx.BuildPagesIn("content", "public")
 }
