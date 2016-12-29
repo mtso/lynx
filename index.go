@@ -2,6 +2,9 @@ package lynx
 
 import (
 	"html/template"
+	"path/filepath"
+	"io/ioutil"
+	"os"
 )
 
 type Index struct {
@@ -36,7 +39,7 @@ func (i *Index) loadTemplate(filepath string) error {
 
 // Implement Writer interface
 func (i *Index) Write(in []byte) (n int, err error) {
-	i.html = append(p.html, in...)
+	i.html = append(i.html, in...)
 	return len(in), nil
 }
 
@@ -47,5 +50,10 @@ func (i *Index) Read(out []byte) (n int, err error) {
 }
 
 func (i *Index) executeTemplate() error {
-	return i.template.Execute(&i, i)
+	return i.template.Execute(i, i)
+}
+
+func (i *Index) writeTo(dirname string) error {
+	filepath := filepath.Join(dirname, "index.html")
+	return ioutil.WriteFile(filepath, i.html, os.ModePerm)
 }

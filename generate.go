@@ -1,28 +1,33 @@
 package lynx
 
 import (
-	"log"
 	"os"
 )
 
 func Generate() error {
 
 	if err := mkdirIfNone("public"); err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	pages, err := lynx.LoadPagesIn("content")
+	pages, err := LoadPagesIn("content")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	err = pages.ExportTo("public")
 	if err != nil {
-		log.Println(err)
+		return err
 	}
 
-	index, err := lynx.NewIndex("Blog", pages)
+	index := NewIndex("Blog", pages)
 	index.loadTemplate("template/index-demo.html")
+	index.executeTemplate()
+	if err := index.writeTo("public"); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Makes a directory if none exists
