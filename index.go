@@ -11,20 +11,11 @@ type Index struct {
 
 	Title string
 
-	Items []IndexItem
-	
 	Pages Pages
 
 	template *template.Template
 
 	html []byte
-}
-
-type IndexItem struct {
-
-	Link string
-
-	Title string
 }
 
 // Creates a new index object
