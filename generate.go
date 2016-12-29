@@ -21,7 +21,6 @@ func Generate() (err error) {
 	}
 
 	// Copy static files
-	mkdirIfNone("./public/css")
 	err = CopyFromTo("./template/css/default.css", "./public/css/style.css")
 
 	// Load content pages

@@ -4,11 +4,20 @@ import (
     "io"
     "os"
     "bufio"
+    "path"
 )
 
 // STOLEN STRAIGHT FROM
 // http://stackoverflow.com/a/9739903/2684355
+// 
+// Modified to create the destination folders
+// if they do not already exist.
 func CopyFromTo(src, dest string) (err error) {
+    
+    // Create directory for dest
+    dir := path.Dir(dest)
+    mkdirIfNone(dir)
+
     // open input file
     fi, err := os.Open(src)
     if err != nil {
