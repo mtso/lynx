@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<link href="{{.StylesheetHref}}" rel="stylesheet">
-		<title>{{.PageTitle}}</title>
+		<title>{{.Title}}</title>
 	</head>
 	<body>
 		<main>
@@ -13,7 +13,7 @@
 			{{.Content}}
 		</article>
 		<footer>
-			<a href="{{.NextPostLocation}}">Next Post</a>
+			<a href="{{.Next.Link}}">Next Post</a>
 		</footer>
 		</main>
 	</body>
