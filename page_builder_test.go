@@ -16,7 +16,7 @@ func TestSiteMapStruct (t *testing.T) {
 	}
 }
 
-func TestIsMarkdownFilename (t *testing.T) {
+func TestisMarkdownExtension (t *testing.T) {
 	cases := []struct {
 		in string
 		want bool
@@ -31,7 +31,7 @@ func TestIsMarkdownFilename (t *testing.T) {
 	}
 
 	for _, c := range cases {
-		got := isMarkdownFilename(c.in)
+		got := isMarkdownExtension(c.in)
 		if got != c.want {
 			t.Errorf("func(%q) == %q, expected %q", c.in, got, c.want)
 		}

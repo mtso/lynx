@@ -76,7 +76,7 @@ func BuildPagesIn(dirname string, exportDir string) {
 
 }
 
-func isMarkdownFilename(filename string) bool {
+func isMarkdownExtension(filename string) bool {
 	switch {
 	case strings.HasSuffix(filename, ".md"):
 		fallthrough

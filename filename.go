@@ -7,12 +7,13 @@ import (
 type Filename string
 
 func (f *Filename) isMarkdown() bool {
+	raw := string(*f)
 	switch {
-	case strings.HasSuffix(*f, ".md"):
+	case strings.HasSuffix(raw, ".md"):
 		fallthrough
-	case strings.HasSuffix(*f, ".mdown"):
+	case strings.HasSuffix(raw, ".mdown"):
 		fallthrough
-	case strings.HasSuffix(*f, ".markdown"):
+	case strings.HasSuffix(raw, ".markdown"):
 		return true
 	default:
 		return false

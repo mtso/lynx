@@ -2,6 +2,7 @@ package lynx
 
 import (
 	"log"
+	"path/filepath"
 	"io/ioutil"
 )
 
@@ -14,17 +15,17 @@ type Page struct {
 	Next *Page
 
 	// Relative link
-	Link string
+	// Link string
 
 	// Page content.
 	Content string
 }
 
-func NewPage(t string, n Page, l string, c string) *Page {
+func NewPage(t string, n *Page, c string) *Page {
 	return &Page {
 		Title: t,
 		Next: n,
-		Link: l,
+		// Link: l,
 		Content: c,
 	}
 }
@@ -38,16 +39,23 @@ func LoadPagesIn(dirname string) []Page {
 	pages := make([]Page, 0)
 	var prev *Page = nil
 	for _, file := range files {
-		if isMarkdownFilename()
-		buf, err := ioutil.ReadFile(file.Name())
-		if err != nil {
-			log.Println(err, file.Name())
+		// if !(filepath.Ext(file.Name()) == ".md")
+		if !isMarkdownExtension(file.Name()) {
 			continue
 		}
 
-		newpage = NewPage(file.Name(), prev, "./" + file.Name(), )
+		buf, err := ioutil.ReadFile(filepath.Join(dirname, file.Name()))
+		if err != nil {
+			log.Println(err)
+			continue
+		}
 
+		content := string(buf[:len(buf)])
+		newpage := NewPage(file.Name(), prev, content)
+		prev = newpage
 
-		pages = append(pages, )
+		pages = append(pages, *newpage)
 	}
+
+	return pages
 }
