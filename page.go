@@ -49,10 +49,10 @@ func (p *Page) Read(out []byte) (n int, err error) {
 	return len(p.html), nil
 }
 
-func LoadPagesIn(dirname string) PageGroup {
+func LoadPagesIn(dirname string) (PageGroup, error) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	pages := make(PageGroup, 0)
@@ -76,7 +76,17 @@ func LoadPagesIn(dirname string) PageGroup {
 		pages = append(pages, *newpage)
 	}
 
-	return pages
+	return pages, nil
+}
+
+// Makes `public` directory to contain the static
+// files for hosting
+func genPublicDir() error {
+	err := os.MkdirAll("public", os.ModePerm)
+	if err == os.ErrInvalid || err == os.ErrPermission {
+		return err
+	}
+	return nil
 }
 
 func (pages PageGroup) ExportTo(dirname string) error {
@@ -84,7 +94,11 @@ func (pages PageGroup) ExportTo(dirname string) error {
 	// Init a new template by parsing post-demo file
 	t, err := template.ParseFiles("template/post-demo.html")
 	if err != nil {
-		log.Fatal(err)
+		return err
+	}
+
+	if err = genPublicDir(); err != nil {
+		return err
 	}
 
 	for _, p := range pages {
@@ -95,7 +109,7 @@ func (pages PageGroup) ExportTo(dirname string) error {
 			continue
 		}
 
-		filepath := filepath.Join(dirname, p.Title) + ".html"
+		filepath := filepath.Join(dirname, stripExt(p.Title)) + ".html"
 		err = ioutil.WriteFile(filepath, p.html, os.ModePerm)
 		if err != nil {
 			log.Println(err)

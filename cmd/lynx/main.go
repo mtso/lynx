@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"log"
 	"github.com/mtso/lynx"
 )
 
@@ -9,9 +9,13 @@ func main() {
 	// lynx.BuildPagesIn("content", "public")
 	// lynx.TemplateDemo()
 	// lynx.ProcessScss()
-	pages := lynx.LoadPagesIn("content")
-	// for _, p := range pages {
-	// 	fmt.Println(p.Title, p.Next, p.Content)
-	// }
-	pages.ExportTo("public")
+	pages, err := lynx.LoadPagesIn("content")
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	err = pages.ExportTo("public")
+	if err != nil {
+		log.Println(err)
+	}
 }
