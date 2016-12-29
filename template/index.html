@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<link rel="stylesheet" href="./css/style.css">
 		<title>{{.Title}}</title>
 	</head>
 	<body>
@@ -11,7 +12,7 @@
 			{{range $index, $page := .Pages}}
 			<li>
 				<time>{{ $page.ModTime.Format "January 2006" }}</time>
-				<a href="">{{ $page.Title }}</a>
+				<a href="{{$page.RelativeLink}}">{{ $page.Title }}</a>
 			</li>
 			{{else}}<li>No posts.</li>{{end}}
 		</ul>

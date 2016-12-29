@@ -18,7 +18,7 @@ type Page struct {
 	Next *Page
 
 	// Relative link
-	// Link string
+	RelativeLink string
 
 	ModTime time.Time
 
@@ -33,12 +33,14 @@ type Page struct {
 type Pages []Page
 
 func NewPage(t string, n *Page, c string, modTime time.Time) *Page {
+	l := filepath.Join(".", t + ".html")
 	return &Page{
 		Title: t,
 		Next:  n,
 		ModTime: modTime,
 		Content: c,
 		html:    make([]byte, 0),
+		RelativeLink: l,
 	}
 }
 
