@@ -2,23 +2,22 @@ package lynx
 
 import "testing"
 
-func TestSiteMapStruct (t *testing.T) {
+func TestSiteMapStruct(t *testing.T) {
 	cases := []struct {
 		in, want string
-	}{
-	}
+	}{}
 
 	for _, c := range cases {
-		got := ""//
+		got := "" //
 		if got != c.want {
 			t.Errorf("func(%q) == %q, expected %q", c.in, got, c.want)
 		}
 	}
 }
 
-func TestisMarkdownExtension (t *testing.T) {
+func TestisMarkdownExtension(t *testing.T) {
 	cases := []struct {
-		in string
+		in   string
 		want bool
 	}{
 		{"test.md", true},

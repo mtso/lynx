@@ -1,8 +1,8 @@
 package lynx
 
 import (
-	"log"
 	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 )
@@ -60,7 +60,7 @@ func BuildPagesIn(dirname string, exportDir string) {
 	if err == os.ErrInvalid || err == os.ErrPermission {
 		log.Fatal(err)
 	}
-	
+
 	exportName := ""
 	for _, filename := range sm.Pages {
 		// load text

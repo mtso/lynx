@@ -1,6 +1,7 @@
 package lynx
 
 import "testing"
+
 /*
 func Test_IsMarkdown (t *testing.T) {
 	cases := []struct {

@@ -2,9 +2,9 @@ package lynx
 
 import (
 	"bytes"
-	"os"
-	"log"
 	"github.com/wellington/go-libsass"
+	"log"
+	"os"
 )
 
 func ProcessScss() {
