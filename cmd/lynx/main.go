@@ -13,5 +13,5 @@ func main() {
 	// for _, p := range pages {
 	// 	fmt.Println(p.Title, p.Next, p.Content)
 	// }
-	pages.ExportTo("/public")
+	pages.ExportTo("public")
 }

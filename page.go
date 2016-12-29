@@ -95,7 +95,7 @@ func (pages PageGroup) ExportTo(dirname string) error {
 			continue
 		}
 
-		filepath := filepath.Join("public", p.Title) + ".html"
+		filepath := filepath.Join(dirname, p.Title) + ".html"
 		err = ioutil.WriteFile(filepath, p.html, os.ModePerm)
 		if err != nil {
 			log.Println(err)
