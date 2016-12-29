@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"io/ioutil"
 	"os"
+	"time"
 	"html/template"
 )
 
@@ -19,6 +20,8 @@ type Page struct {
 	// Relative link
 	// Link string
 
+	ModTime time.Time
+
 	// Page content.
 	Content string
 
@@ -29,11 +32,12 @@ type Page struct {
 
 type Pages []Page
 
-func NewPage(t string, n *Page, c string) *Page {
+func NewPage(t string, n *Page, c string, modTime time.Time) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
 		// Link: l,
+		ModTime: modTime,
 		Content: c,
 		html:    make([]byte, 0),
 	}
@@ -69,14 +73,27 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			continue
 		}
 
-		buf, err := ioutil.ReadFile(filepath.Join(dirname, file.Name()))
+		path := filepath.Join(dirname, file.Name())
+
+		// Get file info
+		// os.Stat(file.Name())
+		stats, err := os.Stat(path) //file.Stat()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		// Read file content
+		buf, err := ioutil.ReadFile(path)
 		if err != nil {
 			log.Println(err)
 			continue
 		}
 
 		content := string(buf[:len(buf)])
-		newpage := NewPage(file.Name(), prev, content)
+		
+
+		newpage := NewPage(file.Name(), prev, content, stats.ModTime())
 		prev = newpage
 
 		pages = append(pages, *newpage)

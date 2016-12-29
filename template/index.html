@@ -9,7 +9,7 @@
 		<ul>
 			{{range $index, $page := .Pages}}
 			<li>
-				<time>{{ $page.Next }}</time>
+				<time>{{ $page.ModTime }}</time>
 				<a href="">{{ $page.Title }}</a>
 			</li>
 			{{else}}<li>No posts.</li>{{end}}
