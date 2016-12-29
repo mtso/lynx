@@ -85,45 +85,35 @@ func LoadPagesIn(dirname string) (Pages, error) {
 	return pages, nil
 }
 
-// Makes `public` directory to contain the static
-// files for hosting
-func genPublicDir() error {
-	err := os.MkdirAll("public", os.ModePerm)
-	if err == os.ErrInvalid || err == os.ErrPermission {
-		return err
-	}
-	return nil
-}
-
 func (pages Pages) loadTemplate(filepath string) error {
 	t, err := template.ParseFiles(filepath)
 	if err != nil {
 		return err
 	}
 
-	for _, page := range pages {
-		page.template = t
+	// Execute on page value by index
+	for i := range pages {
+		pages[i].template = t
 	}
+
 	return nil
 }
 
-func (pages Pages) ExportTo(dirname string) error {
-
-	// Init a new template by parsing post-demo file
-	t, err := template.ParseFiles("template/post.html")
-	if err != nil {
-		return err
+func (pages Pages) executeTemplate() {
+	for i := range pages {
+		t := pages[i].template
+		if err := t.Execute(&pages[i], pages[i]); err != nil {
+			log.Println(err)
+		}
 	}
+}
 
-	if err = genPublicDir(); err != nil {
-		return err
-	}
+func (pages Pages) ExportTo(dirname string) (err error) {
 
 	for _, p := range pages {
-		// Execute post-demo template with Page object
-		err = t.Execute(&p, p)
-		if err != nil {
-			log.Println(err)
+		// Skip pages that have not executed their template
+		if len(p.html) == 0 {
+			log.Printf("%v", p.html)
 			continue
 		}
 
@@ -134,6 +124,5 @@ func (pages Pages) ExportTo(dirname string) error {
 			continue
 		}
 	}
-
-	return err
+	return
 }

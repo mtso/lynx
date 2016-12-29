@@ -11,6 +11,8 @@ const (
 
 func Generate() error {
 
+	var err error = nil
+
 	// Make public directory to store files
 	if err := mkdirIfNone("public"); err != nil {
 		return err
@@ -27,11 +29,11 @@ func Generate() error {
 		return err
 	}
 
+	// Execute template
+	pages.executeTemplate()
+
 	// Save content pages
 	err = pages.ExportTo("public")
-	if err != nil {
-		return err
-	}
 
 	// Generate index page
 	index := NewIndex("Blog", pages)
@@ -48,7 +50,7 @@ func Generate() error {
 		return err
 	}
 
-	return nil
+	return err
 }
 
 // Makes a directory if none exists
