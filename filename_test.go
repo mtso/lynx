@@ -2,17 +2,18 @@ package lynx
 
 import "testing"
 
-/*
+
 func Test_IsMarkdown (t *testing.T) {
 	cases := []struct {
-		in string
+		in Filename
 		want bool
 	}{
 		{Filename("sample.md"), true},
-		{Filename("sample.md"), true},
-		{Filename("sample.md"), true},
-		{Filename("sample.md"), true},
-		{Filename("sample.md"), true},
+		{Filename("sample.markdown"), true},
+		{Filename("sample.mdown"), true},
+		{Filename("sample.html"), false},
+		{Filename("sample.txt"), false},
+		{Filename("sample"), false},
 	}
 
 	for _, c := range cases {
@@ -22,4 +23,4 @@ func Test_IsMarkdown (t *testing.T) {
 		}
 	}
 }
-*/
+
