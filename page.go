@@ -23,9 +23,11 @@ type Page struct {
 	Content string
 
 	html []byte
+
+	template *template.Template
 }
 
-type PageGroup []Page
+type Pages []Page
 
 func NewPage(t string, n *Page, c string) *Page {
 	return &Page{
@@ -49,13 +51,13 @@ func (p *Page) Read(out []byte) (n int, err error) {
 	return len(p.html), nil
 }
 
-func LoadPagesIn(dirname string) (PageGroup, error) {
+func LoadPagesIn(dirname string) (Pages, error) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
 		return nil, err
 	}
 
-	pages := make(PageGroup, 0)
+	pages := make(Pages, 0)
 	var prev *Page = nil
 	for _, file := range files {
 		// if !(filepath.Ext(file.Name()) == ".md")
@@ -89,7 +91,7 @@ func genPublicDir() error {
 	return nil
 }
 
-func (pages PageGroup) ExportTo(dirname string) error {
+func (pages Pages) ExportTo(dirname string) error {
 
 	// Init a new template by parsing post-demo file
 	t, err := template.ParseFiles("template/post-demo.html")
