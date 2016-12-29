@@ -2,9 +2,13 @@ package lynx
 
 import (
 	"log"
-	"errors"
+	// "errors"
 	"path/filepath"
+	// "bufio"
+	// "io"
 	"io/ioutil"
+	// "os"
+	"html/template"
 )
 
 type Page struct {
@@ -20,6 +24,8 @@ type Page struct {
 
 	// Page content.
 	Content string
+
+	html []byte
 }
 
 type PageGroup []Page
@@ -30,7 +36,16 @@ func NewPage(t string, n *Page, c string) *Page {
 		Next: n,
 		// Link: l,
 		Content: c,
+		html: make([]byte, 0),
 	}
+}
+
+// Implement Writer interface
+func (p *Page) Write(in []byte) (n int, err error) {
+	for _, b := range in {
+		p.html = append(p.html, b)
+	}
+	return len(in), nil
 }
 
 func LoadPagesIn(dirname string) PageGroup {
@@ -53,6 +68,7 @@ func LoadPagesIn(dirname string) PageGroup {
 			continue
 		}
 
+		// content := string(buf)
 		content := string(buf[:len(buf)])
 		newpage := NewPage(file.Name(), prev, content)
 		prev = newpage
@@ -63,47 +79,20 @@ func LoadPagesIn(dirname string) PageGroup {
 	return pages
 }
 
-func (pages PageGroup) Print() {
-	for _, p := range pages {
-		// fmt.Println(p.Title, p.Next, p.Content)
-	}
-}
-
 func (pages PageGroup) ExportTo(dirname string) error {
 
-}
-
-
-func BuildPagesIn(dirname string, exportDir string) {
-	sm := &SiteMap{}
-
-	// Load filenames in dirname
-	if err := sm.LoadFilepathsIn(dirname); err != nil {
+	t, err := template.ParseFiles("template/post-demo.html")
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Validate export directory
-	if !strings.HasPrefix(exportDir, "./") {
-		exportDir = "./" + exportDir
-	}
-
-	// Make export directory
-	err := os.MkdirAll(exportDir, os.ModePerm)
-	if err == os.ErrInvalid || err == os.ErrPermission {
-		log.Fatal(err)
-	}
-	
-	exportName := ""
-	for _, filename := range sm.Pages {
-		// load text
-		buf, err := ioutil.ReadFile(dirname + "/" + filename)
+	for _, p := range pages {
+		err = t.Execute(&p, p)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 
-		// write html file
-		exportName = exportDir + "/" + filename + ".html"
-		_ = ioutil.WriteFile(exportName, buf, os.ModePerm)
 	}
 
+	return err
 }
