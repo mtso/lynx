@@ -5,11 +5,12 @@
 		<title>{{.Title}}</title>
 	</head>
 	<body>
+		<h2>{{.Title}}</h2>
 		<main>
 		<ul>
 			{{range $index, $page := .Pages}}
 			<li>
-				<time>{{ $page.ModTime }}</time>
+				<time>{{ $page.ModTime.Format "January 2006" }}</time>
 				<a href="">{{ $page.Title }}</a>
 			</li>
 			{{else}}<li>No posts.</li>{{end}}
