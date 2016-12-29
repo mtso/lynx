@@ -5,5 +5,7 @@ import (
 )
 
 func main() {
-	lynx.BuildPagesIn("content", "public")
+	// lynx.BuildPagesIn("content", "public")
+	// lynx.TemplateDemo()
+	lynx.ProcessScss()
 }
