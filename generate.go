@@ -13,6 +13,8 @@ func Generate() error {
 
 	var err error = nil
 
+	return CopyFromTo("./template/css/default.css", "./public/css/style.css")
+
 	// Make public directory to store files
 	if err := mkdirIfNone("public"); err != nil {
 		return err
@@ -61,3 +63,15 @@ func mkdirIfNone(dirname string) error {
 	}
 	return nil
 }
+
+// // Copy css into public
+// func copyCss() (err error) {
+// 	destdir := "./public/css"
+// 	srcdir := "./template/css"
+// 	mkdirIfNone(destdir)
+// 	dest := filepath.Join(destdir, "style.css")
+// 	src := filepath.Join(srcdir, "default.css")
+// 	os.Create(dest)
+// 	err = CopyFile(dest, src)
+// 	return
+// }
