@@ -2,14 +2,17 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link href="{{.StylesheetHref}}" rel="stylesheet">
-		<title>{{.PageTitle}}</title>
+		<title>{{.Title}}</title>
 	</head>
 	<body>
 		<main>
-		<h2>{{.SiteTitle}}</h2>
 		<ul>
-			{{.PostList}}
+			{{range $index, $page := .Pages}}
+			<li>
+				<time>{{ $page.Next }}</time>
+				<a href="">{{ $page.Title }}</a>
+			</li>
+			{{else}}<li>No posts.</li>{{end}}
 		</ul>
 		</main>
 	</body>
