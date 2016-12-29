@@ -1,10 +1,16 @@
 package lynx
 
 import (
+	"log"
 	"os"
 )
 
 func Generate() error {
+
+	if err := mkdirIfNone("public"); err != nil {
+		log.Fatal(err)
+	}
+
 	pages, err := lynx.LoadPagesIn("content")
 	if err != nil {
 		log.Fatal(err)
