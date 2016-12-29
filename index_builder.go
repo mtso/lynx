@@ -1,5 +1,0 @@
-package lynx
-
-import (
-// "io"
-)
