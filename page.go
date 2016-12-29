@@ -51,6 +51,10 @@ func (p *Page) Read(out []byte) (n int, err error) {
 	return len(p.html), nil
 }
 
+func (p Page) String() string {
+	return p.Title
+}
+
 func LoadPagesIn(dirname string) (Pages, error) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
