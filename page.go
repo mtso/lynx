@@ -95,10 +95,22 @@ func genPublicDir() error {
 	return nil
 }
 
+func (pages Pages) loadTemplate(filepath string) error {
+	t, err := template.ParseFiles(filepath)
+	if err != nil {
+		return err
+	}
+
+	for _, page := range pages {
+		page.template = t
+	}
+	return nil
+}
+
 func (pages Pages) ExportTo(dirname string) error {
 
 	// Init a new template by parsing post-demo file
-	t, err := template.ParseFiles("template/post-demo.html")
+	t, err := template.ParseFiles("template/post.html")
 	if err != nil {
 		return err
 	}

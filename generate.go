@@ -5,6 +5,10 @@ import (
 	"path/filepath"
 )
 
+const (
+	indexTemplateName = "index.html"
+)
+
 func Generate() error {
 
 	// Make public directory to store files
@@ -18,6 +22,11 @@ func Generate() error {
 		return err
 	}
 
+	path := filepath.Join("template", "post.html")
+	if err := pages.loadTemplate(path); err != nil {
+		return err
+	}
+
 	// Save content pages
 	err = pages.ExportTo("public")
 	if err != nil {
@@ -26,7 +35,7 @@ func Generate() error {
 
 	// Generate index page
 	index := NewIndex("Blog", pages)
-	indexTemplatePath := filepath.Join("template", "index-demo.html")
+	indexTemplatePath := filepath.Join("template", indexTemplateName)
 	if err := index.loadTemplate(indexTemplatePath); err != nil {
 		return err
 	}
