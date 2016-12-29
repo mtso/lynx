@@ -14,8 +14,13 @@ func stripExt(path string) string {
 			i = c 
 		}
 	}
+
+	// if no extension existed
+	// return original string 
+	// no stripping necessary
 	if i == 0 {
 		return path
 	}
+	
 	return path[:i]
 }

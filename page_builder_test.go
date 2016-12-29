@@ -2,7 +2,8 @@ package lynx
 
 import "testing"
 
-func TestSiteMapStruct(t *testing.T) {
+/*
+func Test_SiteMapStruct(t *testing.T) {
 	cases := []struct {
 		in, want string
 	}{}
@@ -14,8 +15,9 @@ func TestSiteMapStruct(t *testing.T) {
 		}
 	}
 }
+*/
 
-func TestisMarkdownExtension(t *testing.T) {
+func Test_isMarkdownExtension(t *testing.T) {
 	cases := []struct {
 		in   string
 		want bool
