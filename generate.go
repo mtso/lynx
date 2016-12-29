@@ -2,27 +2,39 @@ package lynx
 
 import (
 	"os"
+	"path/filepath"
 )
 
 func Generate() error {
 
+	// Make public directory to store files
 	if err := mkdirIfNone("public"); err != nil {
 		return err
 	}
 
+	// Load content pages
 	pages, err := LoadPagesIn("content")
 	if err != nil {
 		return err
 	}
 
+	// Save content pages
 	err = pages.ExportTo("public")
 	if err != nil {
 		return err
 	}
 
+	// Generate index page
 	index := NewIndex("Blog", pages)
-	index.loadTemplate("template/index-demo.html")
-	index.executeTemplate()
+	indexTemplatePath := filepath.Join("template", "index-demo.html")
+	if err := index.loadTemplate(indexTemplatePath); err != nil {
+		return err
+	}
+
+	if err := index.executeTemplate(); err != nil {
+		return err
+	}
+
 	if err := index.writeTo("public"); err != nil {
 		return err
 	}
