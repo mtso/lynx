@@ -8,7 +8,7 @@ import (
 )
 
 func ProcessScss() {
-	buf := bytes.NewBufferString("div { p { color: red; } }")
+	buf := bytes.NewBufferString(`$heading1: 4em; h1 { font-size: $heading1; } div { p { color: red; } }`)
 	css, err := libsass.New(os.Stdout, buf)
 	if err != nil {
 		log.Fatal(err)
