@@ -7,7 +7,12 @@
 	<body>
 		<main>
 		<ul>
-			{{range .Pages}}<li>{{ . }}</li>{{else}}<li>No posts.</li>{{end}}
+			{{range $index, $page := .Pages}}
+			<li>
+				<time>{{ $page.Next }}</time>
+				<a href="">{{ $page.Title }}</a>
+			</li>
+			{{else}}<li>No posts.</li>{{end}}
 		</ul>
 		</main>
 	</body>
