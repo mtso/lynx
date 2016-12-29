@@ -7,52 +7,56 @@ import (
 
 const (
 	indexTemplateName = "index.html"
+	exportDir = "public"
 )
 
-func Generate() error {
+func Generate() (err error) {
 
-	var err error = nil
-
-	return CopyFromTo("./template/css/default.css", "./public/css/style.css")
+	// Delete to refresh export folder
+	err = os.RemoveAll(exportDir)
 
 	// Make public directory to store files
-	if err := mkdirIfNone("public"); err != nil {
-		return err
+	if err = mkdirIfNone(exportDir); err != nil {
+		return
 	}
+
+	// Copy static files
+	mkdirIfNone("./public/css")
+	err = CopyFromTo("./template/css/default.css", "./public/css/style.css")
 
 	// Load content pages
 	pages, err := LoadPagesIn("content")
 	if err != nil {
-		return err
+		return
 	}
 
 	path := filepath.Join("template", "post.html")
-	if err := pages.loadTemplate(path); err != nil {
-		return err
+	if err = pages.loadTemplate(path); err != nil {
+		return
 	}
 
 	// Execute template
 	pages.executeTemplate()
 
 	// Save content pages
-	err = pages.ExportTo("public")
+	err = pages.ExportTo(exportDir)
 
 	// Generate index page
 	index := NewIndex("Blog", pages)
 	indexTemplatePath := filepath.Join("template", indexTemplateName)
-	if err := index.loadTemplate(indexTemplatePath); err != nil {
-		return err
+	if err = index.loadTemplate(indexTemplatePath); err != nil {
+		return
 	}
 
-	if err := index.executeTemplate(); err != nil {
-		return err
+	if err = index.executeTemplate(); err != nil {
+		return
 	}
 
-	if err := index.writeTo("public"); err != nil {
-		return err
+	if err = index.writeTo(exportDir); err != nil {
+		return
 	}
 
-	return err
+	return
 }
 
 // Makes a directory if none exists
@@ -63,15 +67,3 @@ func mkdirIfNone(dirname string) error {
 	}
 	return nil
 }
-
-// // Copy css into public
-// func copyCss() (err error) {
-// 	destdir := "./public/css"
-// 	srcdir := "./template/css"
-// 	mkdirIfNone(destdir)
-// 	dest := filepath.Join(destdir, "style.css")
-// 	src := filepath.Join(srcdir, "default.css")
-// 	os.Create(dest)
-// 	err = CopyFile(dest, src)
-// 	return
-// }

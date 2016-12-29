@@ -3,7 +3,6 @@ package lynx
 import (
     "io"
     "os"
-    "log"
     "bufio"
 )
 
@@ -17,8 +16,8 @@ func CopyFromTo(src, dest string) (err error) {
     }
     // close fi on exit and check for its returned error
     defer func() {
-        if err := fi.Close(); err != nil {
-            log.Fatal(err)
+        if err = fi.Close(); err != nil {
+            return
         }
     }()
     // make a read buffer
@@ -29,10 +28,11 @@ func CopyFromTo(src, dest string) (err error) {
     if err != nil {
         return
     }
+
     // close fo on exit and check for its returned error
     defer func() {
-        if err := fo.Close(); err != nil {
-            log.Fatal(err)
+        if err = fo.Close(); err != nil {
+            return
         }
     }()
     // make a write buffer
@@ -44,7 +44,7 @@ func CopyFromTo(src, dest string) (err error) {
         // read a chunk
         n, err := r.Read(buf)
         if err != nil && err != io.EOF {
-            return
+            return err
         }
         if n == 0 {
             break
@@ -52,7 +52,7 @@ func CopyFromTo(src, dest string) (err error) {
 
         // write a chunk
         if _, err := w.Write(buf[:n]); err != nil {
-            return
+            return err
         }
     }
 
