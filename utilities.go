@@ -14,5 +14,8 @@ func stripExt(path string) string {
 			i = c 
 		}
 	}
+	if i == 0 {
+		return path
+	}
 	return path[:i]
 }

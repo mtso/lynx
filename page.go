@@ -36,7 +36,6 @@ func NewPage(t string, n *Page, c string, modTime time.Time) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
-		// Link: l,
 		ModTime: modTime,
 		Content: c,
 		html:    make([]byte, 0),
@@ -76,7 +75,6 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		path := filepath.Join(dirname, file.Name())
 
 		// Get file info
-		// os.Stat(file.Name())
 		stats, err := os.Stat(path) //file.Stat()
 		if err != nil {
 			log.Println(err)
@@ -92,8 +90,8 @@ func LoadPagesIn(dirname string) (Pages, error) {
 
 		content := string(buf[:len(buf)])
 		
-
-		newpage := NewPage(file.Name(), prev, content, stats.ModTime())
+		title := stripExt(file.Name())
+		newpage := NewPage(title, prev, content, stats.ModTime())
 		prev = newpage
 
 		pages = append(pages, *newpage)
@@ -130,7 +128,6 @@ func (pages Pages) ExportTo(dirname string) (err error) {
 	for _, p := range pages {
 		// Skip pages that have not executed their template
 		if len(p.html) == 0 {
-			log.Printf("%v", p.html)
 			continue
 		}
 

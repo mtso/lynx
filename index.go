@@ -13,6 +13,9 @@ type Index struct {
 
 	Pages Pages
 
+
+	// Template in-accessible properties
+	// used for export
 	template *template.Template
 
 	html []byte
