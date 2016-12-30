@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 	"html/template"
+	"strings"
 )
 
 type Page struct {
@@ -20,6 +21,7 @@ type Page struct {
 	// Relative link
 	RelativeLink string
 
+	// Datetime of last modification
 	ModTime time.Time
 
 	// Page content.
@@ -32,15 +34,14 @@ type Page struct {
 
 type Pages []Page
 
-func NewPage(t string, n *Page, c string, modTime time.Time) *Page {
-	l := filepath.Join(".", t + ".html")
+func NewPage(t string, n *Page, c string, modTime time.Time, rel string) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
 		ModTime: modTime,
 		Content: c,
 		html:    make([]byte, 0),
-		RelativeLink: l,
+		RelativeLink: rel,
 	}
 }
 
@@ -92,14 +93,28 @@ func LoadPagesIn(dirname string) (Pages, error) {
 
 		content := string(buf[:len(buf)])
 		
-		title := stripExt(file.Name())
-		newpage := NewPage(title, prev, content, stats.ModTime())
+		// Init page properties
+		title := titleFromFilename(file.Name())
+		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
+
+		newpage := NewPage(
+			title, 
+			prev, 
+			content, 
+			stats.ModTime(), 
+			rel_link,
+		)
 		prev = newpage
 
 		pages = append(pages, *newpage)
 	}
 
 	return pages, nil
+}
+
+func titleFromFilename(filename string) string {
+	t := stripExt(filename)
+	return strings.Replace(t, "-", " ", -1)
 }
 
 func (pages Pages) loadTemplate(filepath string) error {
@@ -133,7 +148,10 @@ func (pages Pages) ExportTo(dirname string) (err error) {
 			continue
 		}
 
-		filepath := filepath.Join(dirname, stripExt(p.Title)) + ".html"
+		// Build filepath from base of relative link
+		base := filepath.Base(p.RelativeLink)
+		filepath := filepath.Join(dirname, base)
+		
 		err = ioutil.WriteFile(filepath, p.html, os.ModePerm)
 		if err != nil {
 			log.Println(err)
