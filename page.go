@@ -41,8 +41,34 @@ func (p Pages) Reverse() Pages {
 	return p
 }
 
-func (p Pages) DateDescending() Pages {
+func (p Pages) Chronological() Pages {
+	for i := 0; i < len(p); i++ {
+		for j := i; j < len(p); j++ {
+			if p[j].isModifiedBefore(p[i]) {
+				p[j], p[i] = p[i], p[j]
+			}
+		}
+	}
 	return p
+}
+
+func (p Pages) ReverseChronological() Pages {
+	for i := 0; i < len(p); i++ {
+		for j := i; j < len(p); j++ {
+			if p[j].isModifiedAfter(p[i]) {
+				p[j], p[i] = p[i], p[j]
+			}
+		}
+	}
+	return p
+}
+
+func (p *Page) isModifiedBefore(right Page) bool {
+	return p.ModTime.Before(right.ModTime)
+}
+
+func (p *Page) isModifiedAfter(right Page) bool {
+	return p.ModTime.After(right.ModTime)
 }
 
 func NewPage(t string, n *Page, c string, modTime time.Time, rel string) *Page {

@@ -27,7 +27,7 @@ type Index struct {
 func NewIndex(t string, pgs Pages) *Index {
 	return &Index {
 		Title: t,
-		Pages: pgs.Reverse(),
+		Pages: pgs.ReverseChronological(),
 		Description: "Lorem ipsum.",
 	}
 }
