@@ -2,6 +2,7 @@ package lynx
 
 import (
 	"log"
+	"strings"
 )
 
 func stripExt(path string) string {
@@ -33,4 +34,17 @@ func notNil(err error) bool {
 		return true
 	}
 	return false
+}
+
+func isMarkdownExtension(filename string) bool {
+	switch {
+	case strings.HasSuffix(filename, ".md"):
+		fallthrough
+	case strings.HasSuffix(filename, ".mdown"):
+		fallthrough
+	case strings.HasSuffix(filename, ".markdown"):
+		return true
+	default:
+		return false
+	}
 }
