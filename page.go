@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	ContentTag = `{{define "post_content"}}#{{end}}`
+	contentTag = `{{define "post_content"}}#{{end}}`
 )
 
 type Page struct {
@@ -114,7 +114,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		
 		// Define a string containing the html representation
 		// of parsed markdown
-		rawContentTemplate := strings.Replace(ContentTag, "#", content, 1)
+		rawContentTemplate := strings.Replace(contentTag, "#", content, 1)
 
 		newpage := NewPage(
 			title, 
