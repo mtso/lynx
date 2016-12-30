@@ -34,6 +34,17 @@ type Page struct {
 
 type Pages []Page
 
+func (p Pages) Reverse() Pages {
+	for i, j := 0, len(p)-1; i < j; i, j = i+1, j-1 {
+		p[i], p[j] = p[j], p[i]
+	}
+	return p
+}
+
+func (p Pages) DateDescending() Pages {
+	return p
+}
+
 func NewPage(t string, n *Page, c string, modTime time.Time, rel string) *Page {
 	return &Page{
 		Title: t,
@@ -151,7 +162,7 @@ func (pages Pages) ExportTo(dirname string) (err error) {
 		// Build filepath from base of relative link
 		base := filepath.Base(p.RelativeLink)
 		filepath := filepath.Join(dirname, base)
-		
+
 		err = ioutil.WriteFile(filepath, p.html, os.ModePerm)
 		if err != nil {
 			log.Println(err)

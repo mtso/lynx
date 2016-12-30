@@ -6,8 +6,11 @@
 		<title>{{.Title}}</title>
 	</head>
 	<body>
-		<h2>{{.Title}}</h2>
 		<main>
+		<details>
+			<summary>{{.Title}}</summary>
+			<p>{{.Description}}</p>
+		</details>
 		<ul>
 			{{range $index, $page := .Pages}}
 			<li>

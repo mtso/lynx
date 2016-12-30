@@ -7,16 +7,20 @@
 	</head>
 	<body>
 		<main>
+		<a href="/">Index</a>
 		<h1>{{.Title}}</h1>
 		<section>
 			<ul>
-				<li>Updated {{.ModTime.Format "2 January at 3:04pm"}}</li>
+				<time>Updated {{.ModTime.Format "January 2, 2006"}}</time>
 			</ul>
 		</section>
 		<article>
 			{{.Content}}
 		</article>
 		<footer>
+		{{if .Next}}
+			<a href="{{.Next.RelativeLink}}">Next Post</a>
+		{{end}}
 		</footer>
 		</main>
 	</body>

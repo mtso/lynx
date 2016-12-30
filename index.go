@@ -13,6 +13,7 @@ type Index struct {
 
 	Pages Pages
 
+	Description string
 
 	// Template in-accessible properties
 	// used for export
@@ -26,7 +27,8 @@ type Index struct {
 func NewIndex(t string, pgs Pages) *Index {
 	return &Index {
 		Title: t,
-		Pages: pgs,
+		Pages: pgs.Reverse(),
+		Description: "Lorem ipsum.",
 	}
 }
 
