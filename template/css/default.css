@@ -1,7 +1,62 @@
-h1, h2, h3, h4, h5, h6 {
-	color: #0031EE;
+/* bolo style for lynx site-generator by mtso */
+
+main {
+	overflow: hidden;
+	max-width: 500px;
+	margin-left: 8em;
+	margin-bottom: 6em;
 }
 
-h1 {
+body {
+	font-size: 1.4em;
+}
+
+.title, 
+main > ul > li:first-child a {
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 	font-size: 4em;
+}
+
+summary, 
+main > a {
+	font-size: 1.2em;
+}
+
+ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+time, 
+summary, 
+main > a, 
+main > ul > li:first-child a, 
+ul > li > a {
+	font-weight: bold;
+}
+
+main > ul > li:first-child time {
+	display: none;
+}
+
+main > ul > li > time {
+	font-weight: normal;
+}
+
+details > p, 
+main > ul > li > time {	
+	font-size: 0.8em;
+}
+
+ul time {
+	display: block;
+}
+
+main > ul > li {
+	margin-bottom: 1.6em;
+}
+
+ul > li > a {
+	font-size: 1.6em;
 }
