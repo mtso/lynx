@@ -1,6 +1,13 @@
 package lynx
 
-import ()
+import (
+	// "bytes"
+	"html/template"
+	"log"
+	"path/filepath"
+	"io/ioutil"
+	"os"
+)
 
 type Pages []Page
 
@@ -41,6 +48,20 @@ func (pages Pages) loadTemplate(filepath string) error {
 
 	// Execute on page value by index
 	for i := range pages {
+		// Clone the base template
+		// This allows us to use the clone to parse
+		// this page's ContentTemplate containing markdown
+		tc, err := t.Clone()
+		if notNil(err) {
+			continue
+		}
+
+		// Attach this page's content template
+		// to its base `post` template
+		t, err := tc.Parse(pages[i].ContentTemplate)
+		if notNil(err) {
+			continue
+		}
 		pages[i].template = t
 	}
 

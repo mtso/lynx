@@ -1,6 +1,7 @@
 package lynx
 
 import (
+	// "bytes"
 	"log"
 	"path/filepath"
 	"io/ioutil"
@@ -9,6 +10,10 @@ import (
 	"html/template"
 	"strings"
 	md "github.com/russross/blackfriday"
+)
+
+const (
+	ContentTag = `{{define "post_content"}}#{{end}}`
 )
 
 type Page struct {
@@ -27,13 +32,14 @@ type Page struct {
 
 	// Page content.
 	Content string
+	ContentTemplate string
 
 	html []byte
 
 	template *template.Template
 }
 
-func NewPage(t string, n *Page, c string, modTime time.Time, rel string) *Page {
+func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
@@ -41,6 +47,7 @@ func NewPage(t string, n *Page, c string, modTime time.Time, rel string) *Page {
 		Content: c,
 		html:    make([]byte, 0),
 		RelativeLink: rel,
+		ContentTemplate: ct,
 	}
 }
 
@@ -98,12 +105,16 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			log.Println(err)
 			continue
 		}
-
-		content := string(buf[:len(buf)])
 		
 		// Init page properties
 		title := titleFromFilename(file.Name())
 		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
+		html := md.MarkdownCommon(buf)
+		content := string(html[:len(html)])
+		
+		// Define a string containing the html representation
+		// of parsed markdown
+		rawContentTemplate := strings.Replace(ContentTag, "#", content, 1)
 
 		newpage := NewPage(
 			title, 
@@ -111,6 +122,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			content, 
 			stats.ModTime(), 
 			rel_link,
+			rawContentTemplate,
 		)
 		prev = newpage
 

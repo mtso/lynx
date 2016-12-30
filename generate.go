@@ -34,6 +34,8 @@ func Generate() (err error) {
 		return
 	}
 
+	pages = pages.ReverseChronological()
+
 	// Execute template
 	pages.executeTemplate()
 

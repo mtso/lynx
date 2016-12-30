@@ -1,7 +1,7 @@
 package lynx
 
-import(
-	
+import (
+	"log"
 )
 
 func stripExt(path string) string {
@@ -23,4 +23,14 @@ func stripExt(path string) string {
 	}
 	
 	return path[:i]
+}
+
+// If the error is not nil
+// logs it and returns true
+func notNil(err error) bool {
+	if err != nil {
+		log.Println(err)
+		return true
+	}
+	return false
 }
