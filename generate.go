@@ -10,7 +10,7 @@ const (
 	exportDir = "public"
 )
 
-func Generate() (err error) {
+func GenerateWith(config Configuration) (err error) {
 
 	// Delete to refresh export folder
 	err = os.RemoveAll(exportDir)
@@ -45,7 +45,7 @@ func Generate() (err error) {
 	err = pages.ExportTo(exportDir)
 
 	// Generate index page
-	index := NewIndex("Blog", pages)
+	index := NewIndex(config.Title, config.Description, pages)
 	indexTemplatePath := filepath.Join("template", indexTemplateName)
 	if err = index.loadTemplate(indexTemplatePath); err != nil {
 		return
@@ -60,6 +60,13 @@ func Generate() (err error) {
 	}
 
 	return
+}
+
+func Generate() (err error) {
+	return GenerateWith(Configuration{
+		Title: "Blog",
+		Description: "Blog description.",
+	})
 }
 
 // Makes a directory if none exists

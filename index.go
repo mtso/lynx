@@ -24,11 +24,11 @@ type Index struct {
 
 // Creates a new index object
 // with specified title
-func NewIndex(t string, pgs Pages) *Index {
+func NewIndex(t string, d string, pgs Pages) *Index {
 	return &Index {
 		Title: t,
+		Description: d,
 		Pages: pgs,
-		Description: "Lorem ipsum.",
 	}
 }
 
