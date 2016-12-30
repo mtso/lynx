@@ -34,7 +34,9 @@ func Generate() (err error) {
 		return
 	}
 
+	// Sort pages in reverse chronological order
 	pages = pages.ReverseChronological()
+	pages.RelinkNext()
 
 	// Execute template
 	pages.executeTemplate()

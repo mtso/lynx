@@ -1,7 +1,6 @@
 package lynx
 
 import (
-	// "bytes"
 	"html/template"
 	"log"
 	"path/filepath"
@@ -96,4 +95,16 @@ func (pages Pages) ExportTo(dirname string) (err error) {
 		}
 	}
 	return
+}
+
+func (p Pages) RelinkNext() {
+	// Point each to next Page in slice
+	for i := 0; i < len(p) - 1; i++ {
+		p[i].Next = &p[i+1]
+	}
+	// Last page points to none
+	p[len(p)-1].Next = nil
+
+	// or first?
+	// p[len(p)-1].Next = &p[0]
 }
