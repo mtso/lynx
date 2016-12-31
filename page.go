@@ -97,7 +97,6 @@ func LoadPagesIn(dirname string) (Pages, error) {
 	pages := make(Pages, 0)
 	var prev *Page = nil
 	for _, file := range files {
-		// if !(filepath.Ext(file.Name()) == ".md")
 		if !isMarkdownExtension(file.Name()) {
 			continue
 		}
@@ -155,7 +154,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			rawContentTemplate,
 			birthtime,
 		)
-		prev = newpage
+		prev = newpage // Assign previous pointer to current page
 
 		pages = append(pages, *newpage)
 	}
