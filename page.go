@@ -1,6 +1,7 @@
 package lynx
 
 import (
+	"fmt"
 	"log"
 	"path/filepath"
 	"io/ioutil"
@@ -10,6 +11,7 @@ import (
 	"strings"
 	md "github.com/russross/blackfriday"
 	"github.com/shibukawa/extstat"
+	"github.com/BluntSporks/readability"
 )
 
 const (
@@ -37,12 +39,15 @@ type Page struct {
 	Content string
 	ContentTemplate string
 
+	// Flesch-Kincaid reading level
+	FleschKinkaid string
+
 	html []byte
 
 	template *template.Template
 }
 
-func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time) *Page {
+func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
@@ -52,6 +57,7 @@ func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct stri
 		RelativeLink: rel,
 		ContentTemplate: ct,
 		BirthTime: birthTime,
+		FleschKinkaid: fk,
 	}
 }
 
@@ -129,8 +135,15 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
 
 		// Parse markdown
-		html := md.MarkdownCommon(stripFrontMatterFrom(buf))
+		article := stripFrontMatterFrom(buf)
+		html := md.MarkdownCommon(article)
 		content := string(html[:len(html)])
+
+		// Calculate rough Flesch Kinkaid
+		// (atm reads in html tags too :/)
+		artstr := string(article[:len(article)])
+		fleschKinkaid := read.Fk(artstr)
+		fkstr := fmt.Sprintf("%.1f", fleschKinkaid)
 		
 		// Define a string containing the html representation
 		// of parsed markdown
@@ -155,6 +168,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			rel_link,
 			rawContentTemplate,
 			birthtime,
+			fkstr,
 		)
 		prev = newpage // Assign previous pointer to current page
 

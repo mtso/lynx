@@ -11,8 +11,8 @@
 		<h1 class="title">{{.Title}}</h1>
 		<section>
 			<ul>
-				<li><time>{{.BirthTime.Format "January 2, 2006"}}</time></li>
-				<li>Readability: <span id="readability"></span></li>
+				<li><time>{{ .BirthTime.Format "January 2, 2006" }}</time></li>
+				<li>Readability: {{ .FleschKinkaid }}</li>
 			</ul>
 		</section>
 		<article>
