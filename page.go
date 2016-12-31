@@ -9,6 +9,7 @@ import (
 	"time"
 	"html/template"
 	"strings"
+	"syscall"
 	md "github.com/russross/blackfriday"
 )
 
@@ -30,6 +31,9 @@ type Page struct {
 	// Datetime of last modification
 	ModTime time.Time
 
+	// Datetime of the file's creation
+	BirthTime time.Time
+
 	// Page content.
 	Content string
 	ContentTemplate string
@@ -39,7 +43,7 @@ type Page struct {
 	template *template.Template
 }
 
-func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string) *Page {
+func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
@@ -48,6 +52,7 @@ func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct stri
 		html:    make([]byte, 0),
 		RelativeLink: rel,
 		ContentTemplate: ct,
+		BirthTime: birthTime,
 	}
 }
 
@@ -116,6 +121,13 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		// of parsed markdown
 		rawContentTemplate := strings.Replace(contentTag, "#", content, 1)
 
+		// Get birth time from syscall
+		// REF:
+		// https://github.com/shibukawa/extstat/blob/master/extstat_darwin.go
+		osStat := stats.Sys().(*syscall.Stat_t)
+		timespec := osStat.Birthtimespec
+		birthtime := time.Unix(int64(timespec.Sec), int64(timespec.Nsec))
+
 		newpage := NewPage(
 			title, 
 			prev, 
@@ -123,6 +135,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			stats.ModTime(), 
 			rel_link,
 			rawContentTemplate,
+			birthtime,
 		)
 		prev = newpage
 
