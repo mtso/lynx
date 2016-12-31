@@ -80,6 +80,14 @@ func (p *Page) isModifiedAfter(right Page) bool {
 	return p.ModTime.After(right.ModTime)
 }
 
+func (p *Page) isCreatedBefore(right Page) bool {
+	return p.BirthTime.Before(right.BirthTime)
+}
+
+func (p *Page) isCreatedAfter(right Page) bool {
+	return p.BirthTime.After(right.BirthTime)
+}
+
 func LoadPagesIn(dirname string) (Pages, error) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
@@ -111,9 +119,10 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		}
 
 		// Parse front matter
-		m, err := parseFrontMatterIn(buf)
-		if created := m["date"]; created != nil {
-			log.Println(created)
+		hasFrontMatter := true
+		frontmatter, err := parseFrontMatterIn(buf)
+		if err != nil {
+			hasFrontMatter = false
 		}
 
 		// Init page properties
@@ -128,6 +137,14 @@ func LoadPagesIn(dirname string) (Pages, error) {
 
 		// Get birth time with extstat
 		morestats := extstat.New(stats)
+		birthtime := morestats.BirthTime
+
+		// Override file birthtime with custom time
+		if hasFrontMatter {
+			if customtime, ok := frontmatter["date"]; ok {
+				birthtime = customtime.(time.Time)
+			} 
+		}
 
 		newpage := NewPage(
 			title, 
@@ -136,7 +153,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			stats.ModTime(), 
 			rel_link,
 			rawContentTemplate,
-			morestats.BirthTime,
+			birthtime,
 		)
 		prev = newpage
 

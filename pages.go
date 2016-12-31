@@ -20,7 +20,7 @@ func (p Pages) Reverse() Pages {
 func (p Pages) Chronological() Pages {
 	for i := 0; i < len(p); i++ {
 		for j := i; j < len(p); j++ {
-			if p[j].isModifiedBefore(p[i]) {
+			if p[j].isCreatedBefore(p[i]) {
 				p[j], p[i] = p[i], p[j]
 			}
 		}
@@ -31,7 +31,7 @@ func (p Pages) Chronological() Pages {
 func (p Pages) ReverseChronological() Pages {
 	for i := 0; i < len(p); i++ {
 		for j := i; j < len(p); j++ {
-			if p[j].isModifiedAfter(p[i]) {
+			if p[j].isCreatedAfter(p[i]) {
 				p[j], p[i] = p[i], p[j]
 			}
 		}
