@@ -9,8 +9,8 @@ Static blog site generator.
 0. [x] Load post content into memory
 0. [x] Execute content on HTML templates
 0. [x] Save generated HTML to public folder
-0. [ ] Get content file creation time
-0. [ ] Parse YAML front-matter in `content/`
+0. [x] Get content file creation time
+0. [x] Parse YAML front-matter in `content/`
 0. [ ] Copy static assets into public folder
 0. [ ] Add default template to lynx package (probably as a subdirectory)
 0. [ ] Conform templates into go packages (only one location to update)
