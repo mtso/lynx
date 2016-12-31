@@ -90,8 +90,7 @@ func parseFrontMatterLine(line string) (string, interface{}, error) {
 func stripFrontMatterFrom(b []byte) []byte {
 	buf := bytes.NewBuffer(b)
 	r := bufio.NewReader(buf)
-	writebuf := new(bytes.Buffer)
-
+	
 	i, hasFrontMatter := 0, false
 	Loop:
 	for l, err := r.ReadBytes('\n'); err == nil; l, err = r.ReadBytes('\n') {
@@ -99,9 +98,9 @@ func stripFrontMatterFrom(b []byte) []byte {
 		line := string(l)
 		switch {
 
-		// Return if first line didn't have frontmatter
+		// Return input bytes as-is if first line didn't have frontmatter
 		case !hasFrontMatter && i > 0:
-			break Loop
+			return b
 		
 		// Begin frontmatter parse if first line is `---\n`
 		case line == "---\n" && i == 0: // !hasFrontMatter:
@@ -109,6 +108,7 @@ func stripFrontMatterFrom(b []byte) []byte {
 
 		// If we reach another `---\n` after first line,
 		// consider as closing delimiter
+		// and break Reading loop
 		case line == "---\n":
 			break Loop
 		}
@@ -116,10 +116,8 @@ func stripFrontMatterFrom(b []byte) []byte {
 		i++
 	}
 
-	// _, err := writebuf.ReadFrom(r)
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// Read the rest of the bytes after the front matter
+	writebuf := new(bytes.Buffer)
 	writebuf.ReadFrom(r)
 	return writebuf.Bytes()
 }
