@@ -86,3 +86,40 @@ func parseFrontMatterLine(line string) (string, interface{}, error) {
 	}
 	return key, value, errUnrecognizedKey
 }
+
+func stripFrontMatterFrom(b []byte) []byte {
+	buf := bytes.NewBuffer(b)
+	r := bufio.NewReader(buf)
+	writebuf := new(bytes.Buffer)
+
+	i, hasFrontMatter := 0, false
+	Loop:
+	for l, err := r.ReadBytes('\n'); err == nil; l, err = r.ReadBytes('\n') {
+		
+		line := string(l)
+		switch {
+
+		// Return if first line didn't have frontmatter
+		case !hasFrontMatter && i > 0:
+			break Loop
+		
+		// Begin frontmatter parse if first line is `---\n`
+		case line == "---\n" && i == 0: // !hasFrontMatter:
+			hasFrontMatter = true
+
+		// If we reach another `---\n` after first line,
+		// consider as closing delimiter
+		case line == "---\n":
+			break Loop
+		}
+
+		i++
+	}
+
+	// _, err := writebuf.ReadFrom(r)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	writebuf.ReadFrom(r)
+	return writebuf.Bytes()
+}

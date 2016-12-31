@@ -127,7 +127,9 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		// Init page properties
 		title := titleFromFilename(file.Name())
 		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
-		html := md.MarkdownCommon(buf)
+
+		// Parse markdown
+		html := md.MarkdownCommon(stripFrontMatterFrom(buf))
 		content := string(html[:len(html)])
 		
 		// Define a string containing the html representation
