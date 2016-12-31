@@ -15,6 +15,7 @@ Static blog site generator.
 0. [ ] Add default template to lynx package (probably as a subdirectory)
 0. [ ] Conform templates into go packages (only one location to update)
 0. [ ] Add documentation on how to get started.
+0. [ ] Add reading ease test
 
 #### Backlog
 0. [ ] Preprocess SCSS and save to public folder

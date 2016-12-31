@@ -68,6 +68,15 @@ ul {
 	padding-left: 0;
 }
 
+section > ul > li,
+section > ul > li > time {
+	display: inline;
+}
+
+section > ul > li {
+	margin-right: 1em;
+}
+
 main > ul > li,
 article {
 	margin-bottom: 1.6em;
