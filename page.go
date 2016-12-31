@@ -1,7 +1,6 @@
 package lynx
 
 import (
-	// "bytes"
 	"log"
 	"path/filepath"
 	"io/ioutil"
@@ -9,8 +8,8 @@ import (
 	"time"
 	"html/template"
 	"strings"
-	"syscall"
 	md "github.com/russross/blackfriday"
+	"github.com/shibukawa/extstat"
 )
 
 const (
@@ -121,12 +120,8 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		// of parsed markdown
 		rawContentTemplate := strings.Replace(contentTag, "#", content, 1)
 
-		// Get birth time from syscall
-		// REF:
-		// https://github.com/shibukawa/extstat/blob/master/extstat_darwin.go
-		osStat := stats.Sys().(*syscall.Stat_t)
-		timespec := osStat.Birthtimespec
-		birthtime := time.Unix(int64(timespec.Sec), int64(timespec.Nsec))
+		// Get birth time with extstat
+		morestats := extstat.New(stats)
 
 		newpage := NewPage(
 			title, 
@@ -135,7 +130,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			stats.ModTime(), 
 			rel_link,
 			rawContentTemplate,
-			birthtime,
+			morestats.BirthTime,
 		)
 		prev = newpage
 
