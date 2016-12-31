@@ -109,7 +109,13 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			log.Println(err)
 			continue
 		}
-		
+
+		// Parse front matter
+		m, err := parseFrontMatterIn(buf)
+		if created := m["date"]; created != nil {
+			log.Println(created)
+		}
+
 		// Init page properties
 		title := titleFromFilename(file.Name())
 		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
