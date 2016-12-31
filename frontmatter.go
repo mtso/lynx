@@ -26,7 +26,7 @@ func parseFrontMatterIn(b []byte) (map[string]interface{}, error) {
 	buf := bytes.NewBuffer(b)
 	r := bufio.NewReader(buf)
 
-	m := make(map[string]interface{})
+	stringAnyMap := make(map[string]interface{})
 	i, hasFrontMatter := 0, false
 	for l, err := r.ReadBytes('\n'); err == nil; l, err = r.ReadBytes('\n') {
 		
@@ -36,7 +36,7 @@ func parseFrontMatterIn(b []byte) (map[string]interface{}, error) {
 
 		// Return if first line didn't have frontmatter
 		case !hasFrontMatter && i > 0:
-			return m, errNoFrontMatter
+			return stringAnyMap, errNoFrontMatter
 		
 		// Begin frontmatter parse if first line is `---\n`
 		case line == "---\n" && i == 0: // !hasFrontMatter:
@@ -44,21 +44,21 @@ func parseFrontMatterIn(b []byte) (map[string]interface{}, error) {
 
 		// If we reach another `---\n` consider as closing delimiter
 		case line == "---\n":
-			return m, nil
+			return stringAnyMap, nil
 
 		// Parse front matter in current line
 		case hasFrontMatter:
-			k, v, err := parseFrontMatterLine(line[:len(line)-1])
+			key, value, err := parseFrontMatterLine(line[:len(line)-1])
 			if err != nil {
 				break Switch
 			}
-			m[k] = v
+			stringAnyMap[key] = value
 		}
 
 		i++
 	}
 
-	return m, nil
+	return stringAnyMap, nil
 }
 
 func parseFrontMatterLine(line string) (string, interface{}, error) {
