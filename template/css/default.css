@@ -8,19 +8,59 @@ main {
 }
 
 body {
-	font-size: 1.4em;
+	font-size: 1em;
+}
+
+details > p, 
+main > ul > li > time {	
+	font-size: 1em;
 }
 
 .title, 
 main > ul > li:first-child a {
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
-	font-size: 4em;
+	font-size: 6em;
 }
 
-summary, 
-main > a {
+{
+	font-size: 2em;
+}
+
+summary,
+main > a,
+ul > li > a {
+	font-size: 1.6em;
+}
+
+article,
+footer {
 	font-size: 1.2em;
+}
+
+img, video {
+	width: 100%;
+}
+
+time, 
+summary, 
+main > a, 
+main > ul > li:first-child a, 
+ul > li > a,
+footer > a {
+	font-weight: bold;
+}
+
+main > ul > li > time {
+	font-weight: normal;
+}
+
+ul time {
+	display: block;
+}
+
+main > ul > li:first-child time {
+	display: none;
 }
 
 ul {
@@ -28,35 +68,38 @@ ul {
 	padding-left: 0;
 }
 
-time, 
-summary, 
-main > a, 
-main > ul > li:first-child a, 
-ul > li > a {
-	font-weight: bold;
-}
-
-main > ul > li:first-child time {
-	display: none;
-}
-
-main > ul > li > time {
-	font-weight: normal;
-}
-
-details > p, 
-main > ul > li > time {	
-	font-size: 0.8em;
-}
-
-ul time {
-	display: block;
-}
-
-main > ul > li {
+main > ul > li,
+article {
 	margin-bottom: 1.6em;
 }
 
-ul > li > a {
-	font-size: 1.6em;
+/* small-screen layout */
+
+@media (max-width: 760px),
+
+only screen 
+	and (min-device-width: 375px) 
+	and (max-device-width: 667px) 
+	and (-webkit-min-device-pixel-ratio: 2),
+
+only screen 
+	and (min-device-width: 414px) 
+	and (max-device-width: 736px) 
+	and (-webkit-min-device-pixel-ratio: 3) {
+
+	body {
+		font-size: 1.4em;
+	}
+
+	.title, 
+	main > ul > li:first-child a {
+		font-size: 5em;
+	}
+
+	main {
+		max-width: 100%;
+		margin-left: 0.5em; /*1em;*/
+		padding-right: 0.5em;
+		margin-bottom: 4em;
+	}
 }
