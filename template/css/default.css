@@ -75,17 +75,7 @@ article {
 
 /* small-screen layout */
 
-@media (max-width: 760px),
-
-only screen 
-	and (min-device-width: 375px) 
-	and (max-device-width: 667px) 
-	and (-webkit-min-device-pixel-ratio: 2),
-
-only screen 
-	and (min-device-width: 414px) 
-	and (max-device-width: 736px) 
-	and (-webkit-min-device-pixel-ratio: 3) {
+@media (max-width: 760px) {
 
 	body {
 		font-size: 1.4em;
@@ -98,7 +88,39 @@ only screen
 
 	main {
 		max-width: 100%;
-		margin-left: 0.5em; /*1em;*/
+		margin-left: 0.5em;
+		padding-right: 0.5em;
+		margin-bottom: 4em;
+	}
+}
+
+@media only screen 
+	and (min-device-width: 375px) 
+	and (max-device-width: 667px) 
+	and (-webkit-min-device-pixel-ratio: 2),
+only screen 
+	and (min-device-width: 414px) 
+	and (max-device-width: 736px) 
+	and (-webkit-min-device-pixel-ratio: 3) {
+
+	body {
+		font-size: 2em;
+	}
+
+	.title, 
+	main > ul > li:first-child a {
+		font-size: 6em;
+	}
+
+	summary,
+	main > a,
+	ul > li > a {
+		font-size: 2em;
+	}
+
+	main {
+		max-width: 100%;
+		margin-left: 0.5em;
 		padding-right: 0.5em;
 		margin-bottom: 4em;
 	}
