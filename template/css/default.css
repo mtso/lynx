@@ -12,7 +12,8 @@ body {
 }
 
 details > p, 
-main > ul > li > time {	
+main > ul > li > time,
+section > ul > li > a {	
 	font-size: 1em;
 }
 
