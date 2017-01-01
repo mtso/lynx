@@ -1,5 +1,6 @@
 # lynx
 [![Build Status](https://travis-ci.org/mtso/lynx.svg?branch=master)](https://travis-ci.org/mtso/lynx)
+[![codecov](https://codecov.io/gh/mtso/lynx/branch/master/graph/badge.svg)](https://codecov.io/gh/mtso/lynx)
 
 Static blog site generator.
 
@@ -15,7 +16,7 @@ Static blog site generator.
 0. [ ] Add default template to lynx package (probably as a subdirectory)
 0. [ ] Conform templates into go packages (only one location to update)
 0. [ ] Add documentation on how to get started.
-0. [ ] Add reading ease test
+0. [x] Add reading ease test
 
 #### Backlog
 0. [ ] Preprocess SCSS and save to public folder

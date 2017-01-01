@@ -4,9 +4,9 @@ import (
 	"strings"
 )
 
-type Filename string
+type filename string
 
-func (f *Filename) isMarkdown() bool {
+func (f *filename) isMarkdown() bool {
 	raw := string(*f)
 	switch {
 	case strings.HasSuffix(raw, ".md"):

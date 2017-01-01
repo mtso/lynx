@@ -12,7 +12,7 @@ import (
 // 
 // Modified to create the destination folders
 // if they do not already exist.
-func CopyFromTo(src, dest string) (err error) {
+func copyFromTo(src, dest string) (err error) {
     
     // Create directory for dest
     dir := path.Dir(dest)

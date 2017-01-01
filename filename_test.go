@@ -5,15 +5,15 @@ import "testing"
 
 func Test_IsMarkdown (t *testing.T) {
 	cases := []struct {
-		in Filename
+		in filename
 		want bool
 	}{
-		{Filename("sample.md"), true},
-		{Filename("sample.markdown"), true},
-		{Filename("sample.mdown"), true},
-		{Filename("sample.html"), false},
-		{Filename("sample.txt"), false},
-		{Filename("sample"), false},
+		{filename("sample.md"), true},
+		{filename("sample.markdown"), true},
+		{filename("sample.mdown"), true},
+		{filename("sample.html"), false},
+		{filename("sample.txt"), false},
+		{filename("sample"), false},
 	}
 
 	for _, c := range cases {

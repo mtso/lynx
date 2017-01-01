@@ -24,7 +24,7 @@ type Index struct {
 
 // Creates a new index object
 // with specified title
-func NewIndex(t string, d string, pgs Pages) *Index {
+func newIndex(t string, d string, pgs Pages) *Index {
 	return &Index {
 		Title: t,
 		Description: d,

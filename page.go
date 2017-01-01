@@ -20,10 +20,10 @@ const (
 
 type Page struct {
 
-	// Title of the page.
+	// Title of the Page.
 	Title string
 
-	// Pointer to the next page.
+	// Pointer to the next Page.
 	Next *Page
 
 	// Relative link
@@ -47,7 +47,7 @@ type Page struct {
 	template *template.Template
 }
 
-func NewPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
+func newPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
 	return &Page{
 		Title: t,
 		Next:  n,
@@ -94,13 +94,13 @@ func (p *Page) isCreatedAfter(right Page) bool {
 	return p.BirthTime.After(right.BirthTime)
 }
 
-func LoadPagesIn(dirname string) (Pages, error) {
+func loadPagesIn(dirname string) (Pages, error) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
 		return nil, err
 	}
 
-	pages := make(Pages, 0)
+	Pages := make(Pages, 0)
 	var prev *Page = nil
 	for _, file := range files {
 		if !isMarkdownExtension(file.Name()) {
@@ -130,7 +130,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			hasFrontMatter = false
 		}
 
-		// Init page properties
+		// Init Page properties
 		title := titleFromFilename(file.Name())
 		lowercase := strings.ToLower(title)
 		dashedTitle := strings.Replace(lowercase, " ", "-", -1)
@@ -167,7 +167,7 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			} 
 		}
 
-		newpage := NewPage(
+		newPage := newPage(
 			title, 
 			prev, 
 			content, 
@@ -177,12 +177,12 @@ func LoadPagesIn(dirname string) (Pages, error) {
 			birthtime,
 			fkstr,
 		)
-		prev = newpage // Assign previous pointer to current page
+		prev = newPage // Assign previous pointer to current Page
 
-		pages = append(pages, *newpage)
+		Pages = append(Pages, *newPage)
 	}
 
-	return pages, nil
+	return Pages, nil
 }
 
 func titleFromFilename(filename string) (t string) {

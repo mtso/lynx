@@ -10,7 +10,7 @@ import (
 	"path"
 )
 
-func ProcessScss(dirname string) {
+func processScss(dirname string) {
 	files, err := ioutil.ReadDir(dirname)
 	if err != nil {
 		log.Fatal(err)

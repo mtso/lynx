@@ -21,31 +21,31 @@ func GenerateWith(config Configuration) (err error) {
 	}
 
 	// Copy static files
-	err = CopyFromTo("./template/css/default.css", "./public/css/style.css")
+	err = copyFromTo("./template/css/default.css", "./public/css/style.css")
 
-	// Load content pages
-	pages, err := LoadPagesIn("content")
+	// Load content Pages
+	Pages, err := loadPagesIn("content")
 	if err != nil {
 		return
 	}
 
 	path := filepath.Join("template", "post.html")
-	if err = pages.loadTemplate(path); err != nil {
+	if err = Pages.loadTemplate(path); err != nil {
 		return
 	}
 
-	// Sort pages in reverse chronological order
-	pages = pages.ReverseChronological()
-	pages.RelinkNext()
+	// Sort Pages in reverse chronological order
+	Pages = Pages.reverseChronological()
+	Pages.relinkNext()
 
 	// Execute template
-	pages.executeTemplate()
+	Pages.executeTemplate()
 
-	// Save content pages
-	err = pages.ExportTo(exportDir)
+	// Save content Pages
+	err = Pages.exportTo(exportDir)
 
-	// Generate index page
-	index := NewIndex(config.Title, config.Description, pages)
+	// Generate index Page
+	index := newIndex(config.Title, config.Description, Pages)
 	indexTemplatePath := filepath.Join("template", indexTemplateName)
 	if err = index.loadTemplate(indexTemplatePath); err != nil {
 		return
