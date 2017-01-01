@@ -67,6 +67,7 @@ func (pages Pages) loadTemplate(filepath string) error {
 	return nil
 }
 
+// USE THIS: https://golang.org/pkg/html/template/#hdr-Typed_Strings
 func (pages Pages) executeTemplate() {
 	for i := range pages {
 		t := pages[i].template
@@ -85,10 +86,16 @@ func (pages Pages) ExportTo(dirname string) (err error) {
 		}
 
 		// Build filepath from base of relative link
-		base := filepath.Base(p.RelativeLink)
-		filepath := filepath.Join(dirname, base)
+		rel_link := filepath.Base(p.RelativeLink)
+		dir_path := filepath.Join(dirname, rel_link)
 
-		err = ioutil.WriteFile(filepath, p.html, os.ModePerm)
+		rel_location := filepath.Join(rel_link, "index.html")
+		full_filepath := filepath.Join(dirname, rel_location)
+
+		// Make directories for permalink path
+		mkdirIfNone(dir_path)
+
+		err = ioutil.WriteFile(full_filepath, p.html, os.ModePerm)
 		if err != nil {
 			log.Println(err)
 			continue

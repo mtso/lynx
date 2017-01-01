@@ -134,7 +134,12 @@ func LoadPagesIn(dirname string) (Pages, error) {
 		title := titleFromFilename(file.Name())
 		lowercase := strings.ToLower(title)
 		dashedTitle := strings.Replace(lowercase, " ", "-", -1)
-		rel_link := filepath.Join(".", dashedTitle + ".html")
+
+		// Relative link will be the clean directory name
+		// that eventually contains the index.html file
+		// without .html extension
+		root := "."
+		rel_link := filepath.Join(root, dashedTitle)
 
 		// Parse markdown
 		article := stripFrontMatterFrom(buf)
