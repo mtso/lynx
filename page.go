@@ -126,7 +126,9 @@ func LoadPagesIn(dirname string) (Pages, error) {
 
 		// Init page properties
 		title := titleFromFilename(file.Name())
-		rel_link := filepath.Join(".", stripExt(file.Name()) + ".html")
+		lowercase := strings.ToLower(title)
+		dashedTitle := strings.Replace(lowercase, " ", "-", -1)
+		rel_link := filepath.Join(".", dashedTitle + ".html")
 
 		// Parse markdown
 		html := md.MarkdownCommon(stripFrontMatterFrom(buf))
@@ -164,7 +166,9 @@ func LoadPagesIn(dirname string) (Pages, error) {
 	return pages, nil
 }
 
-func titleFromFilename(filename string) string {
-	t := stripExt(filename)
-	return strings.Replace(t, "-", " ", -1)
+func titleFromFilename(filename string) (t string) {
+	t = stripExt(filename)
+	t = strings.Replace(t, "-", " ", -1)
+	t = strings.Title(t)
+	return
 }
