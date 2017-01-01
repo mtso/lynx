@@ -38,8 +38,13 @@ footer {
 	font-size: 1.2em;
 }
 
-img, video {
+img, 
+video {
 	width: 100%;
+}
+
+article {
+	word-wrap: break-word;
 }
 
 time, 
