@@ -1,6 +1,4 @@
-# lynx
-[![Build Status](https://travis-ci.org/mtso/lynx.svg?branch=master)](https://travis-ci.org/mtso/lynx)
-[![codecov](https://codecov.io/gh/mtso/lynx/branch/master/graph/badge.svg)](https://codecov.io/gh/mtso/lynx)
+# lynx [![Build Status](https://travis-ci.org/mtso/lynx.svg?branch=master)](https://travis-ci.org/mtso/lynx) [![Coverage Status][codecov-badge]][codecov]
 
 Static blog site generator.
 
@@ -21,3 +19,6 @@ Static blog site generator.
 #### Backlog
 0. [ ] Preprocess SCSS and save to public folder
 0. [ ] Add unit tests to hit higher coverage %
+
+[codecov-badge]: https://img.shields.io/codecov/c/github/mtso/lynx.svg
+[codecov]: https://codecov.io/github/mtso/lynx
