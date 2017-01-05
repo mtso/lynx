@@ -11,7 +11,7 @@ import (
 	"strings"
 	md "github.com/russross/blackfriday"
 	"github.com/shibukawa/extstat"
-	"github.com/BluntSporks/readability"
+	"github.com/mtso/readability"
 )
 
 const (
