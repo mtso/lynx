@@ -45,7 +45,7 @@ func (Pages Pages) loadTemplate(filepath string) error {
 		return err
 	}
 
-	// Execute on Page value by index
+	// Execute on Page value by Index
 	for i := range Pages {
 		// Clone the base template
 		// This allows us to use the clone to parse

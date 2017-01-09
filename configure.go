@@ -5,7 +5,7 @@ package lynx
 // the configuration properties.
 type Configuration struct {
 
-	// Title is a string of the index page.
+	// Title is a string of the Index page.
 	Title string
 
 	// Description is a string describing the generated website.

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	indexTemplateName = "index.html"
+	IndexTemplateName = "index.html"
 	exportDir         = "public"
 )
 
@@ -47,18 +47,18 @@ func GenerateWith(config Configuration) (err error) {
 	// Save content Pages
 	err = Pages.exportTo(exportDir)
 
-	// Generate index Page
-	index := newindex(config.Title, config.Description, Pages)
-	indexTemplatePath := filepath.Join("template", indexTemplateName)
-	if err = index.loadTemplate(indexTemplatePath); err != nil {
+	// Generate Index Page
+	Index := newIndex(config.Title, config.Description, Pages)
+	IndexTemplatePath := filepath.Join("template", IndexTemplateName)
+	if err = Index.loadTemplate(IndexTemplatePath); err != nil {
 		return
 	}
 
-	if err = index.executeTemplate(); err != nil {
+	if err = Index.executeTemplate(); err != nil {
 		return
 	}
 
-	if err = index.writeTo(exportDir); err != nil {
+	if err = Index.writeTo(exportDir); err != nil {
 		return
 	}
 
