@@ -2,21 +2,21 @@ package lynx
 
 import (
 	"html/template"
-	"path/filepath"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type Index struct {
-
 	Title string
 
 	Pages Pages
 
-	Description string
+	// Description is HTML encoded.
+	Description template.HTML
 
-	// Template in-accessible properties
-	// used for export
+	// Template inaccessible properties
+	// used for export.
 	template *template.Template
 
 	html []byte
@@ -25,10 +25,10 @@ type Index struct {
 // Creates a new index object
 // with specified title
 func newIndex(t string, d string, pgs Pages) *Index {
-	return &Index {
-		Title: t,
-		Description: d,
-		Pages: pgs,
+	return &Index{
+		Title:       t,
+		Description: template.HTML(d),
+		Pages:       pgs,
 	}
 }
 
