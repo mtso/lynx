@@ -18,6 +18,7 @@ const (
 	contentTag = `{{define "post_content"}}#{{end}}`
 )
 
+// Page represents the data and properties of a single post.
 type Page struct {
 
 	// Title of the Page.
@@ -37,7 +38,6 @@ type Page struct {
 
 	// Page content.
 	Content         string
-	ContentTemplate string
 
 	// Flesch-Kincaid reading level
 	FleschKinkaid string
@@ -45,6 +45,9 @@ type Page struct {
 	html []byte
 
 	template *template.Template
+
+	// temporary template for Content body
+	contentTemplate string
 }
 
 func newPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
@@ -55,24 +58,25 @@ func newPage(t string, n *Page, c string, modTime time.Time, rel string, ct stri
 		Content:         c,
 		html:            make([]byte, 0),
 		RelativeLink:    rel,
-		ContentTemplate: ct,
+		contentTemplate: ct,
 		BirthTime:       birthTime,
 		FleschKinkaid:   fk,
 	}
 }
 
-// Implement Writer interface
+// Write implements the Writer interface for use with the HTML template execution.
 func (p *Page) Write(in []byte) (n int, err error) {
 	p.html = append(p.html, in...)
 	return len(in), nil
 }
 
-// Implement Reader interface
+// Read implements the Reader interface for use with the HTML template execution.
 func (p *Page) Read(out []byte) (n int, err error) {
 	out = append(out, p.html...)
 	return len(p.html), nil
 }
 
+// String implements the Stringer interface by returning the Title of the Page.
 func (p Page) String() string {
 	return p.Title
 }
@@ -154,7 +158,7 @@ func loadPagesIn(dirname string) (Pages, error) {
 
 		// Define a string containing the html representation
 		// of parsed markdown
-		rawContentTemplate := strings.Replace(contentTag, "#", content, 1)
+		rawcontentTemplate := strings.Replace(contentTag, "#", content, 1)
 
 		// Get birth time with extstat
 		morestats := extstat.New(stats)
@@ -173,7 +177,7 @@ func loadPagesIn(dirname string) (Pages, error) {
 			content,
 			stats.ModTime(),
 			rel_link,
-			rawContentTemplate,
+			rawcontentTemplate,
 			birthtime,
 			fkstr,
 		)

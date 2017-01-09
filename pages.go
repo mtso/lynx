@@ -8,6 +8,9 @@ import (
 	"path/filepath"
 )
 
+// Pages is a type that represents a slice collection of Page structs.
+// It is the receiver for functions that manipulate Page order.
+// The Pages in an Index struct can be iterated through an HTML template.
 type Pages []Page
 
 func (p Pages) reverse() Pages {
@@ -49,7 +52,7 @@ func (Pages Pages) loadTemplate(filepath string) error {
 	for i := range Pages {
 		// Clone the base template
 		// This allows us to use the clone to parse
-		// this Page's ContentTemplate containing markdown
+		// this Page's contentTemplate containing markdown
 		tc, err := t.Clone()
 		if notNil(err) {
 			continue
@@ -57,7 +60,7 @@ func (Pages Pages) loadTemplate(filepath string) error {
 
 		// Attach this Page's content template
 		// to its base `post` template
-		t, err := tc.Parse(Pages[i].ContentTemplate)
+		t, err := tc.Parse(Pages[i].contentTemplate)
 		if notNil(err) {
 			continue
 		}
