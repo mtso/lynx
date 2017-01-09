@@ -2,10 +2,10 @@ package lynx
 
 import (
 	"html/template"
-	"log"
-	"path/filepath"
 	"io/ioutil"
+	"log"
 	"os"
+	"path/filepath"
 )
 
 type Pages []Page
@@ -106,7 +106,7 @@ func (Pages Pages) exportTo(dirname string) (err error) {
 
 func (p Pages) relinkNext() {
 	// Point each to next Page in slice
-	for i := 0; i < len(p) - 1; i++ {
+	for i := 0; i < len(p)-1; i++ {
 		p[i].Next = &p[i+1]
 	}
 	// Last Page points to none

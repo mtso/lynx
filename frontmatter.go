@@ -1,11 +1,11 @@
 package lynx
 
 import (
-	"errors"
-	"time"
 	"bufio"
 	"bytes"
+	"errors"
 	"strings"
+	"time"
 )
 
 const (
@@ -13,8 +13,8 @@ const (
 )
 
 var (
-	errNoFrontMatter = errors.New("no front matter")
-	errInvalidYaml = errors.New("invalid yaml front matter")
+	errNoFrontMatter   = errors.New("no front matter")
+	errInvalidYaml     = errors.New("invalid yaml front matter")
 	errUnrecognizedKey = errors.New("unrecognized yaml key")
 )
 
@@ -29,15 +29,15 @@ func parseFrontMatterIn(b []byte) (map[string]interface{}, error) {
 	stringAnyMap := make(map[string]interface{})
 	i, hasFrontMatter := 0, false
 	for l, err := r.ReadBytes('\n'); err == nil; l, err = r.ReadBytes('\n') {
-		
+
 		line := string(l)
-		Switch:
+	Switch:
 		switch {
 
 		// Return if first line didn't have frontmatter
 		case !hasFrontMatter && i > 0:
 			return stringAnyMap, errNoFrontMatter
-		
+
 		// Begin frontmatter parse if first line is `---\n`
 		case line == "---\n" && i == 0: // !hasFrontMatter:
 			hasFrontMatter = true
@@ -76,12 +76,12 @@ func parseFrontMatterLine(line string) (string, interface{}, error) {
 	}
 
 	switch key {
-		case "date":
-			t, err := time.Parse(date_layout, value)
-			if err != nil {
-				return "", nil, err
-			}
-			return key, t, nil
+	case "date":
+		t, err := time.Parse(date_layout, value)
+		if err != nil {
+			return "", nil, err
+		}
+		return key, t, nil
 
 	}
 	return key, value, errUnrecognizedKey
@@ -90,18 +90,18 @@ func parseFrontMatterLine(line string) (string, interface{}, error) {
 func stripFrontMatterFrom(b []byte) []byte {
 	buf := bytes.NewBuffer(b)
 	r := bufio.NewReader(buf)
-	
+
 	i, hasFrontMatter := 0, false
-	Loop:
+Loop:
 	for l, err := r.ReadBytes('\n'); err == nil; l, err = r.ReadBytes('\n') {
-		
+
 		line := string(l)
 		switch {
 
 		// Return input bytes as-is if first line didn't have frontmatter
 		case !hasFrontMatter && i > 0:
 			return b
-		
+
 		// Begin frontmatter parse if first line is `---\n`
 		case line == "---\n" && i == 0: // !hasFrontMatter:
 			hasFrontMatter = true

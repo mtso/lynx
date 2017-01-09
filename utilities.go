@@ -12,17 +12,17 @@ func stripExt(path string) string {
 	// path[:i] = 012
 	for c, ch := range path {
 		if ch == '.' {
-			i = c 
+			i = c
 		}
 	}
 
 	// if no extension existed
-	// return original string 
+	// return original string
 	// no stripping necessary
 	if i == 0 {
 		return path
 	}
-	
+
 	return path[:i]
 }
 

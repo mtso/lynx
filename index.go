@@ -7,7 +7,8 @@ import (
 	"path/filepath"
 )
 
-type Index struct {
+// index contains the data properties used in generating index.html
+type index struct {
 	Title string
 
 	Pages Pages
@@ -22,18 +23,18 @@ type Index struct {
 	html []byte
 }
 
-// Creates a new index object
+// newindex creates a new index object
 // with specified title
-func newIndex(t string, d string, pgs Pages) *Index {
-	return &Index{
+func newindex(t string, d string, pgs Pages) *index {
+	return &index{
 		Title:       t,
 		Description: template.HTML(d),
 		Pages:       pgs,
 	}
 }
 
-// Load template by parsing filepath
-func (i *Index) loadTemplate(filepath string) error {
+// loadTemplate loads an index template by parsing filepath.
+func (i *index) loadTemplate(filepath string) error {
 	t, err := template.ParseFiles(filepath)
 	if err != nil {
 		return err
@@ -42,23 +43,23 @@ func (i *Index) loadTemplate(filepath string) error {
 	return nil
 }
 
-// Implement Writer interface
-func (i *Index) Write(in []byte) (n int, err error) {
+// Write implements Writer interface.
+func (i *index) Write(in []byte) (n int, err error) {
 	i.html = append(i.html, in...)
 	return len(in), nil
 }
 
-// Implement Reader interface
-func (i *Index) Read(out []byte) (n int, err error) {
+// Read implements the Reader interface.
+func (i *index) Read(out []byte) (n int, err error) {
 	out = append(out, i.html...)
 	return len(i.html), nil
 }
 
-func (i *Index) executeTemplate() error {
+func (i *index) executeTemplate() error {
 	return i.template.Execute(i, i)
 }
 
-func (i *Index) writeTo(dirname string) error {
+func (i *index) writeTo(dirname string) error {
 	filepath := filepath.Join(dirname, "index.html")
 	return ioutil.WriteFile(filepath, i.html, os.ModePerm)
 }

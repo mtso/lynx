@@ -2,16 +2,16 @@ package lynx
 
 import (
 	"fmt"
-	"log"
-	"path/filepath"
-	"io/ioutil"
-	"os"
-	"time"
-	"html/template"
-	"strings"
+	"github.com/mtso/readability"
 	md "github.com/russross/blackfriday"
 	"github.com/shibukawa/extstat"
-	"github.com/mtso/readability"
+	"html/template"
+	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
 const (
@@ -36,7 +36,7 @@ type Page struct {
 	BirthTime time.Time
 
 	// Page content.
-	Content string
+	Content         string
 	ContentTemplate string
 
 	// Flesch-Kincaid reading level
@@ -49,15 +49,15 @@ type Page struct {
 
 func newPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
 	return &Page{
-		Title: t,
-		Next:  n,
-		ModTime: modTime,
-		Content: c,
-		html:    make([]byte, 0),
-		RelativeLink: rel,
+		Title:           t,
+		Next:            n,
+		ModTime:         modTime,
+		Content:         c,
+		html:            make([]byte, 0),
+		RelativeLink:    rel,
 		ContentTemplate: ct,
-		BirthTime: birthTime,
-		FleschKinkaid: fk,
+		BirthTime:       birthTime,
+		FleschKinkaid:   fk,
 	}
 }
 
@@ -151,7 +151,7 @@ func loadPagesIn(dirname string) (Pages, error) {
 		artstr := string(article[:len(article)])
 		fleschKinkaid := read.Fk(artstr)
 		fkstr := fmt.Sprintf("%.1f", fleschKinkaid)
-		
+
 		// Define a string containing the html representation
 		// of parsed markdown
 		rawContentTemplate := strings.Replace(contentTag, "#", content, 1)
@@ -164,14 +164,14 @@ func loadPagesIn(dirname string) (Pages, error) {
 		if hasFrontMatter {
 			if customtime, ok := frontmatter["date"]; ok {
 				birthtime = customtime.(time.Time)
-			} 
+			}
 		}
 
 		newPage := newPage(
-			title, 
-			prev, 
-			content, 
-			stats.ModTime(), 
+			title,
+			prev,
+			content,
+			stats.ModTime(),
 			rel_link,
 			rawContentTemplate,
 			birthtime,

@@ -1,73 +1,73 @@
 package lynx
 
 import (
-    "io"
-    "os"
-    "bufio"
-    "path"
+	"bufio"
+	"io"
+	"os"
+	"path"
 )
 
 // STOLEN STRAIGHT FROM
 // http://stackoverflow.com/a/9739903/2684355
-// 
+//
 // Modified to create the destination folders
 // if they do not already exist.
 func copyFromTo(src, dest string) (err error) {
-    
-    // Create directory for dest
-    dir := path.Dir(dest)
-    mkdirIfNone(dir)
 
-    // open input file
-    fi, err := os.Open(src)
-    if err != nil {
-        return
-    }
-    // close fi on exit and check for its returned error
-    defer func() {
-        if err = fi.Close(); err != nil {
-            return
-        }
-    }()
-    // make a read buffer
-    r := bufio.NewReader(fi)
+	// Create directory for dest
+	dir := path.Dir(dest)
+	mkdirIfNone(dir)
 
-    // open output file
-    fo, err := os.Create(dest)
-    if err != nil {
-        return
-    }
+	// open input file
+	fi, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	// close fi on exit and check for its returned error
+	defer func() {
+		if err = fi.Close(); err != nil {
+			return
+		}
+	}()
+	// make a read buffer
+	r := bufio.NewReader(fi)
 
-    // close fo on exit and check for its returned error
-    defer func() {
-        if err = fo.Close(); err != nil {
-            return
-        }
-    }()
-    // make a write buffer
-    w := bufio.NewWriter(fo)
+	// open output file
+	fo, err := os.Create(dest)
+	if err != nil {
+		return
+	}
 
-    // make a buffer to keep chunks that are read
-    buf := make([]byte, 1024)
-    for {
-        // read a chunk
-        n, err := r.Read(buf)
-        if err != nil && err != io.EOF {
-            return err
-        }
-        if n == 0 {
-            break
-        }
+	// close fo on exit and check for its returned error
+	defer func() {
+		if err = fo.Close(); err != nil {
+			return
+		}
+	}()
+	// make a write buffer
+	w := bufio.NewWriter(fo)
 
-        // write a chunk
-        if _, err := w.Write(buf[:n]); err != nil {
-            return err
-        }
-    }
+	// make a buffer to keep chunks that are read
+	buf := make([]byte, 1024)
+	for {
+		// read a chunk
+		n, err := r.Read(buf)
+		if err != nil && err != io.EOF {
+			return err
+		}
+		if n == 0 {
+			break
+		}
 
-    if err = w.Flush(); err != nil {
-        return
-    }
+		// write a chunk
+		if _, err := w.Write(buf[:n]); err != nil {
+			return err
+		}
+	}
 
-    return
+	if err = w.Flush(); err != nil {
+		return
+	}
+
+	return
 }

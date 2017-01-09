@@ -2,10 +2,9 @@ package lynx
 
 import "testing"
 
-
-func Test_IsMarkdown (t *testing.T) {
+func Test_IsMarkdown(t *testing.T) {
 	cases := []struct {
-		in filename
+		in   filename
 		want bool
 	}{
 		{filename("sample.md"), true},
@@ -23,4 +22,3 @@ func Test_IsMarkdown (t *testing.T) {
 		}
 	}
 }
-
