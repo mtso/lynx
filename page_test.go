@@ -12,6 +12,9 @@ func Test_titleFromFilename(t *testing.T) {
 		{"apples-plus-apples.mdown", "Apples Plus Apples"},
 		{"A-(Code)-Walk-to-Remember.markdown", "A (Code) Walk to Remember"},
 		{"sample.txt", "Sample"},
+		{"sample", "Sample"},
+		{"sample.html", "Sample"},
+		{"Hello World.md", "Hello World"},
 	}
 
 	for _, c := range cases {
