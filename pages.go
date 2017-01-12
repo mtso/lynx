@@ -2,12 +2,15 @@ package lynx
 
 import (
 	"html/template"
-	"log"
-	"path/filepath"
 	"io/ioutil"
+	"log"
 	"os"
+	"path/filepath"
 )
 
+// Pages is a type that represents a slice collection of Page structs.
+// It is the receiver for functions that manipulate Page order.
+// The Pages in an Index struct can be iterated through an HTML template.
 type Pages []Page
 
 func (p Pages) reverse() Pages {
@@ -45,11 +48,11 @@ func (Pages Pages) loadTemplate(filepath string) error {
 		return err
 	}
 
-	// Execute on Page value by index
+	// Execute on Page value by Index
 	for i := range Pages {
 		// Clone the base template
 		// This allows us to use the clone to parse
-		// this Page's ContentTemplate containing markdown
+		// this Page's contentTemplate containing markdown
 		tc, err := t.Clone()
 		if notNil(err) {
 			continue
@@ -57,7 +60,7 @@ func (Pages Pages) loadTemplate(filepath string) error {
 
 		// Attach this Page's content template
 		// to its base `post` template
-		t, err := tc.Parse(Pages[i].ContentTemplate)
+		t, err := tc.Parse(Pages[i].contentTemplate)
 		if notNil(err) {
 			continue
 		}
@@ -106,7 +109,7 @@ func (Pages Pages) exportTo(dirname string) (err error) {
 
 func (p Pages) relinkNext() {
 	// Point each to next Page in slice
-	for i := 0; i < len(p) - 1; i++ {
+	for i := 0; i < len(p)-1; i++ {
 		p[i].Next = &p[i+1]
 	}
 	// Last Page points to none

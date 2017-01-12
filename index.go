@@ -2,37 +2,38 @@ package lynx
 
 import (
 	"html/template"
-	"path/filepath"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
+// Index contains the data properties used in generating index.html
 type Index struct {
-
 	Title string
 
 	Pages Pages
 
-	Description string
+	// Description is HTML encoded.
+	Description template.HTML
 
-	// Template in-accessible properties
-	// used for export
+	// Template inaccessible properties
+	// used for export.
 	template *template.Template
 
 	html []byte
 }
 
-// Creates a new index object
+// newIndex creates a new Index object
 // with specified title
 func newIndex(t string, d string, pgs Pages) *Index {
-	return &Index {
-		Title: t,
-		Description: d,
-		Pages: pgs,
+	return &Index{
+		Title:       t,
+		Description: template.HTML(d),
+		Pages:       pgs,
 	}
 }
 
-// Load template by parsing filepath
+// loadTemplate loads an Index template by parsing filepath.
 func (i *Index) loadTemplate(filepath string) error {
 	t, err := template.ParseFiles(filepath)
 	if err != nil {
@@ -42,13 +43,13 @@ func (i *Index) loadTemplate(filepath string) error {
 	return nil
 }
 
-// Implement Writer interface
+// Write implements Writer interface.
 func (i *Index) Write(in []byte) (n int, err error) {
 	i.html = append(i.html, in...)
 	return len(in), nil
 }
 
-// Implement Reader interface
+// Read implements the Reader interface.
 func (i *Index) Read(out []byte) (n int, err error) {
 	out = append(out, i.html...)
 	return len(i.html), nil

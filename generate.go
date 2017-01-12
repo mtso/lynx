@@ -6,10 +6,13 @@ import (
 )
 
 const (
-	indexTemplateName = "index.html"
-	exportDir = "public"
+	IndexTemplateName = "index.html"
+	exportDir         = "public"
 )
 
+// GenerateWith reads files from content and template directories to export
+// a public directory containing compiled static site files.
+// Takes a Configuration containing Title and Description as an argument.
 func GenerateWith(config Configuration) (err error) {
 
 	// Delete to refresh export folder
@@ -44,27 +47,29 @@ func GenerateWith(config Configuration) (err error) {
 	// Save content Pages
 	err = Pages.exportTo(exportDir)
 
-	// Generate index Page
-	index := newIndex(config.Title, config.Description, Pages)
-	indexTemplatePath := filepath.Join("template", indexTemplateName)
-	if err = index.loadTemplate(indexTemplatePath); err != nil {
+	// Generate Index Page
+	Index := newIndex(config.Title, config.Description, Pages)
+	IndexTemplatePath := filepath.Join("template", IndexTemplateName)
+	if err = Index.loadTemplate(IndexTemplatePath); err != nil {
 		return
 	}
 
-	if err = index.executeTemplate(); err != nil {
+	if err = Index.executeTemplate(); err != nil {
 		return
 	}
 
-	if err = index.writeTo(exportDir); err != nil {
+	if err = Index.writeTo(exportDir); err != nil {
 		return
 	}
 
 	return
 }
 
+// Generate calls GenerateWith using a default Configuration object of
+// {Title: "Blog", Description: "Blog description."}
 func Generate() (err error) {
 	return GenerateWith(Configuration{
-		Title: "Blog",
+		Title:       "Blog",
 		Description: "Blog description.",
 	})
 }

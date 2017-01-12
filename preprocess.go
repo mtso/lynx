@@ -3,11 +3,11 @@ package lynx
 import (
 	"bytes"
 	"github.com/wellington/go-libsass"
+	"io/ioutil"
 	"log"
 	"os"
-	"strings"
-	"io/ioutil"
 	"path"
+	"strings"
 )
 
 func processScss(dirname string) {

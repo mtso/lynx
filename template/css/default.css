@@ -4,7 +4,7 @@ main {
 	overflow: hidden;
 	max-width: 500px;
 	margin-left: 8em;
-	margin-bottom: 6em;
+	margin-bottom: 4em;
 }
 
 body {
@@ -126,10 +126,15 @@ only screen
 	main > ul > li:first-child a {
 		font-size: 6em;
 	}
-
+	
+	article {
+		font-size: 1.6em;
+	}
+	
 	summary,
 	main > a,
-	ul > li > a {
+	ul > li > a,
+	footer {
 		font-size: 2em;
 	}
 
@@ -137,6 +142,6 @@ only screen
 		max-width: 100%;
 		margin-left: 0.5em;
 		padding-right: 0.5em;
-		margin-bottom: 4em;
+		margin-bottom: 2em;
 	}
 }
