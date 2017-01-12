@@ -18,6 +18,28 @@ const (
 	contentTag = `{{define "post_content"}}#{{end}}`
 )
 
+// Ref: "Capitalize all words in titles of publications and documents,
+// except a, an, the, at, by, for, in, of, on, to, up, and, as, but, or, and nor."
+// http://grammar.yourdictionary.com/capitalization/rules-for-capitalization-in-titles.html
+var titleExceptions = strings.NewReplacer(
+	" A ", " a ",
+	" An ", " an ",
+	" The ", " the ",
+	" At ", " at ",
+	" By ", " by ",
+	" For ", " for ",
+	" In ", " in ",
+	" Of ", " of ",
+	" On ", " on ",
+	" To ", " to ",
+	" Up ", " up ",
+	" And ", " and ",
+	" As ", " as ",
+	" But ", " but ",
+	" Or ", " or ",
+	" Nor ", " nor ",
+)
+
 // Page represents the data and properties of a single post.
 type Page struct {
 
@@ -193,9 +215,7 @@ func titleFromFilename(filename string) (t string) {
 	t = stripExt(filename)
 	t = strings.Replace(t, "-", " ", -1)
 
-	// Ref: "Capitalize all words in titles of publications and documents,
-	// except a, an, the, at, by, for, in, of, on, to, up, and, as, but, or, and nor."
-	// http://grammar.yourdictionary.com/capitalization/rules-for-capitalization-in-titles.html
 	t = strings.Title(t)
+	t = titleExceptions.Replace(t)
 	return
 }
