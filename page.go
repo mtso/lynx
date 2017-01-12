@@ -188,6 +188,10 @@ func loadPagesIn(dirname string) (Pages, error) {
 func titleFromFilename(filename string) (t string) {
 	t = stripExt(filename)
 	t = strings.Replace(t, "-", " ", -1)
+
+	// Ref: "Capitalize all words in titles of publications and documents, 
+	// except a, an, the, at, by, for, in, of, on, to, up, and, as, but, or, and nor."
+	// http://grammar.yourdictionary.com/capitalization/rules-for-capitalization-in-titles.html
 	t = strings.Title(t)
 	return
 }
