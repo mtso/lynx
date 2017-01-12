@@ -3,7 +3,7 @@ package lynx
 import "testing"
 
 
-func Test_IsMarkdown (t *testing.T) {
+func Test_isMarkdown (t *testing.T) {
 	cases := []struct {
 		in filename
 		want bool

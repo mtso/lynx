@@ -2,7 +2,7 @@ package lynx
 
 import "testing"
 
-func Test_StripExt(t *testing.T) {
+func Test_stripExt(t *testing.T) {
 	cases := []struct {
 		in, want string
 	}{
