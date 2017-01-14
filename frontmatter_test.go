@@ -34,3 +34,19 @@ func Test_parseDateFrom(t *testing.T) {
 		}
 	}
 }
+
+func Test_stripsFrontMatter(t *testing.T) {
+	cases := []struct {
+		in, want []byte
+	}{
+		{[]byte("---\ndate: jan 21 2017\n---\n<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>"), []byte("<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>")},
+	}
+
+	for _, c := range cases {
+		got := stripFrontMatterFrom(c.in)
+
+		if string(got) != string(c.want) {
+			t.Errorf("stripsFrontMatterFrom(), got: %q", got)
+		}
+	}
+}
