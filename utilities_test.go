@@ -18,3 +18,24 @@ func Test_stripExt(t *testing.T) {
 		}
 	}
 }
+
+func Test_isMarkdownExtension(t *testing.T) {
+	cases := []struct {
+		in   string
+		want bool
+	}{
+		{"sample.md", true},
+		{"sample.markdown", true},
+		{"sample.mdown", true},
+		{"sample.html", false},
+		{"sample.txt", false},
+		{"sample", false},
+	}
+
+	for _, c := range cases {
+		got := isMarkdownExtension(c.in)
+		if got != c.want {
+			t.Errorf("isMarkdownExtension(%q) == %q, expected %q", c.in, got, c.want)
+		}
+	}
+}

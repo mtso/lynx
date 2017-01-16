@@ -35,3 +35,16 @@ func notNil(err error) bool {
 	}
 	return false
 }
+
+func isMarkdownExtension(filename string) bool {
+	switch {
+	case filepath.Ext(filename) == ".md":
+		return true
+	case filepath.Ext(filename) == ".mdown":
+		return true
+	case filepath.Ext(filename) == ".markdown":
+		return true
+	default:
+		return false
+	}
+}
