@@ -40,6 +40,7 @@ func Test_stripsFrontMatter(t *testing.T) {
 		in, want []byte
 	}{
 		{[]byte("---\ndate: jan 21 2017\n---\n<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>"), []byte("<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>")},
+		{[]byte("<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>"), []byte("<DOCTYPE! html>\n<html>\n<head>\n<title>blog</title>\n</head>\n</html>")},
 	}
 
 	for _, c := range cases {
