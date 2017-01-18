@@ -10,7 +10,10 @@ func Test_ConfigurationStruct(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		conf := &Configuration{c.inTitle, c.inDesc}
+		conf := &Configuration{
+			Title: c.inTitle,
+			Description: c.inDesc,
+		}
 		gotTitle := conf.Title
 		gotDesc := conf.Description
 		if conf.Title != c.wantTitle && conf.Description != c.wantDesc {
