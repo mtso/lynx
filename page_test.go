@@ -31,7 +31,7 @@ func Test_newPage(t *testing.T) {
 	gotTitle := testPage.String()
 	wantTitle := "Test Title"
 
-	if (gotTitle != wantTitle) {
+	if gotTitle != wantTitle {
 		t.Errorf("New page title: %q, but expected %q", gotTitle, wantTitle)
 	}
 }
@@ -41,9 +41,9 @@ func Test_timeComparisons(t *testing.T) {
 	time.Sleep(100)
 	pageAfter := newPage("PageAfter", nil, "test", time.Now(), "./test-title", "<h1>Heading 1</h1>", time.Now(), "10")
 
-	cases := []struct{
+	cases := []struct {
 		before, after *Page
-		actual, want bool
+		actual, want  bool
 	}{
 		{pageBefore, pageAfter, pageBefore.isModifiedBefore(*pageAfter), true},
 		{pageBefore, pageAfter, pageAfter.isModifiedAfter(*pageBefore), true},

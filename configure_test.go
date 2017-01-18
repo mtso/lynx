@@ -13,7 +13,7 @@ func Test_ConfigurationStruct(t *testing.T) {
 		conf := &Configuration{c.inTitle, c.inDesc}
 		gotTitle := conf.Title
 		gotDesc := conf.Description
-		if (conf.Title != c.wantTitle && conf.Description != c.wantDesc) {
+		if conf.Title != c.wantTitle && conf.Description != c.wantDesc {
 			t.Errorf("New Configuration title/desc: Expected %q/%q, got %q/%q", c.wantTitle, c.wantDesc, gotTitle, gotDesc)
 		}
 	}
