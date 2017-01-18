@@ -7,13 +7,20 @@ import (
 
 const (
 	IndexTemplateName = "index.html"
-	exportDir         = "public"
+	defaultExportDir  = "public"
 )
 
 // GenerateWith reads files from content and template directories to export
 // a public directory containing compiled static site files.
 // Takes a Configuration containing Title and Description as an argument.
 func GenerateWith(config Configuration) (err error) {
+
+	var exportDir string
+	if configDir := config.ExportDir; configDir != nil {
+		exportDir = *configDir
+	} else {
+		exportDir = defaultExportDir
+	}
 
 	// Delete to refresh export folder
 	err = os.RemoveAll(exportDir)

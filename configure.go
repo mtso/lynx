@@ -11,4 +11,6 @@ type Configuration struct {
 	// Description is a string describing the generated website.
 	// HTML tags included in here will be parsed during site generation.
 	Description string
+
+	ExportDir *string
 }
