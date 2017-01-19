@@ -2,6 +2,7 @@ package lynx
 
 import "testing"
 import "time"
+import "log"
 
 func Test_titleFromFilename(t *testing.T) {
 	cases := []struct {
@@ -27,13 +28,27 @@ func Test_titleFromFilename(t *testing.T) {
 }
 
 func Test_newPage(t *testing.T) {
+
 	testPage := newPage("Test Title", nil, "test", time.Now(), "./test-title", "<h1>Heading 1</h1>", time.Now(), "10")
 	gotTitle := testPage.String()
 	wantTitle := "Test Title"
 
+
 	if gotTitle != wantTitle {
 		t.Errorf("New page title: %q, but expected %q", gotTitle, wantTitle)
 	}
+
+	// expectbuffer := []byte("<p>test data</p>")
+	// writebuffer := []byte("<p>test data</p>")
+	// writelen, _ := testPage.Write(writebuffer)
+	// log.Println(testPage.html)
+
+	// readbuffer := make([]byte, writelen)
+	// readlen, _ := testPage.Read(readbuffer)
+	// log.Println(readlen)
+	// log.Println(readbuffer)
+	// log.Println(testPage.html)
+	// assertSlicesEqual(readbuffer, expectbuffer, t)
 }
 
 func Test_timeComparisons(t *testing.T) {
