@@ -11,7 +11,7 @@ func Test_ConfigurationStruct(t *testing.T) {
 
 	for _, c := range cases {
 		conf := &Configuration{
-			Title: c.inTitle,
+			Title:       c.inTitle,
 			Description: c.inDesc,
 		}
 		gotTitle := conf.Title
