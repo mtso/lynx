@@ -1,6 +1,7 @@
 package lynx
 
 import "testing"
+import "errors"
 
 func Test_stripExt(t *testing.T) {
 	cases := []struct {
@@ -37,5 +38,13 @@ func Test_isMarkdownExtension(t *testing.T) {
 		if got != c.want {
 			t.Errorf("isMarkdownExtension(%q) == %q, expected %q", c.in, got, c.want)
 		}
+	}
+}
+
+func Test_checkError(t *testing.T) {
+	testerror := errors.New("unit testing demo error")
+	isNil := !notNil(testerror)
+	if isNil {
+		t.Errorf("notNil(%q) == %q, but got %q", testerror, true, isNil)
 	}
 }

@@ -2,7 +2,6 @@ package lynx
 
 import "testing"
 import "time"
-import "log"
 
 func Test_titleFromFilename(t *testing.T) {
 	cases := []struct {
