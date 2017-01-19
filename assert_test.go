@@ -10,12 +10,3 @@ func assertExists(filepath string, t *testing.T) {
 		t.Errorf("Expected %q to exist, but it does not: %q", filepath, err.Error());
 	}
 }
-
-func Test_testAssert(t *testing.T) {
-	var filepath = "./test"
-	err := mkdirIfNone(filepath)
-	if err != nil {
-		t.Errorf(err.Error())
-	}
-	assertExists(filepath, t)
-}
