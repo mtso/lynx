@@ -1,8 +1,8 @@
 package lynx
 
 import (
-	"testing"
 	"os"
+	"testing"
 )
 
 func Test_generateDefault(t *testing.T) {
@@ -15,9 +15,9 @@ func Test_generateDefault(t *testing.T) {
 func Test_generateWith(t *testing.T) {
 	testDir := "./generate_test"
 	testconfig := &Configuration{
-		Title: "Generation Test Title",
+		Title:       "Generation Test Title",
 		Description: "Generation Test Description",
-		ExportDir: &testDir,
+		ExportDir:   &testDir,
 	}
 	GenerateWith(*testconfig)
 	assertExists(testDir, t)

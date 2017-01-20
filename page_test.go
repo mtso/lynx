@@ -32,7 +32,6 @@ func Test_newPage(t *testing.T) {
 	gotTitle := testPage.String()
 	wantTitle := "Test Title"
 
-
 	if gotTitle != wantTitle {
 		t.Errorf("New page title: %q, but expected %q", gotTitle, wantTitle)
 	}

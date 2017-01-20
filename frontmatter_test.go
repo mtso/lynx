@@ -36,7 +36,7 @@ func Test_parseDateFrom(t *testing.T) {
 }
 
 func Test_parseFrontMatter(t *testing.T) {
-	
+
 }
 
 func Test_parseFrontMatterLine(t *testing.T) {
