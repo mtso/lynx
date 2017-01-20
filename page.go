@@ -58,9 +58,6 @@ type Page struct {
 	// Datetime of the file's creation
 	BirthTime time.Time
 
-	// Page content.
-	Content string
-
 	// Flesch-Kincaid reading level
 	FleschKinkaid string
 
@@ -68,21 +65,20 @@ type Page struct {
 
 	template *template.Template
 
-	// temporary template for Content body
-	contentTemplate string
+	// Page content.
+	Content template.HTML
 }
 
-func newPage(t string, n *Page, c string, modTime time.Time, rel string, ct string, birthTime time.Time, fk string) *Page {
+func newPage(t string, n *Page, c string, modTime time.Time, rel string, birthTime time.Time, fk string) *Page {
 	return &Page{
-		Title:           t,
-		Next:            n,
-		ModTime:         modTime,
-		Content:         c,
-		html:            make([]byte, 0),
-		RelativeLink:    rel,
-		contentTemplate: ct,
-		BirthTime:       birthTime,
-		FleschKinkaid:   fk,
+		Title:         t,
+		Next:          n,
+		ModTime:       modTime,
+		html:          make([]byte, 0),
+		RelativeLink:  rel,
+		BirthTime:     birthTime,
+		FleschKinkaid: fk,
+		Content:       template.HTML(c),
 	}
 }
 
@@ -178,10 +174,6 @@ func loadPagesIn(dirname string) (Pages, error) {
 		fleschKinkaid := read.Fk(artstr)
 		fkstr := fmt.Sprintf("%.1f", fleschKinkaid)
 
-		// Define a string containing the html representation
-		// of parsed markdown
-		rawcontentTemplate := strings.Replace(contentTag, "#", content, 1)
-
 		// Get birth time with extstat
 		morestats := extstat.New(stats)
 		birthtime := morestats.BirthTime
@@ -199,7 +191,6 @@ func loadPagesIn(dirname string) (Pages, error) {
 			content,
 			stats.ModTime(),
 			rel_link,
-			rawcontentTemplate,
 			birthtime,
 			fkstr,
 		)

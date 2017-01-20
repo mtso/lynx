@@ -50,20 +50,20 @@ func (Pages Pages) loadTemplate(filepath string) error {
 
 	// Execute on Page value by Index
 	for i := range Pages {
-		// Clone the base template
-		// This allows us to use the clone to parse
-		// this Page's contentTemplate containing markdown
-		tc, err := t.Clone()
-		if notNil(err) {
-			continue
-		}
+		// // Clone the base template
+		// // This allows us to use the clone to parse
+		// // this Page's contentTemplate containing markdown
+		// tc, err := t.Clone()
+		// if notNil(err) {
+		// 	continue
+		// }
 
-		// Attach this Page's content template
-		// to its base `post` template
-		t, err := tc.Parse(Pages[i].contentTemplate)
-		if notNil(err) {
-			continue
-		}
+		// // Attach this Page's content template
+		// // to its base `post` template
+		// t, err := tc.Parse(Pages[i].contentTemplate)
+		// if notNil(err) {
+		// 	continue
+		// }
 		Pages[i].template = t
 	}
 
