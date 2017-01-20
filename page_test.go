@@ -28,7 +28,8 @@ func Test_titleFromFilename(t *testing.T) {
 
 func Test_newPage(t *testing.T) {
 
-	testPage := newPage("Test Title", nil, "test", time.Now(), "./test-title", "<h1>Heading 1</h1>", time.Now(), "10")
+	// func newPage(t string, n *Page, c string, modTime time.Time, rel string, birthTime time.Time, fk string) *Page {
+	testPage := newPage("Test Title", nil, "<h1>Heading 1</h1>", time.Now(), "./test-title", time.Now(), "10")
 	gotTitle := testPage.String()
 	wantTitle := "Test Title"
 
@@ -50,9 +51,9 @@ func Test_newPage(t *testing.T) {
 }
 
 func Test_timeComparisons(t *testing.T) {
-	pageBefore := newPage("PageBefore", nil, "test", time.Now(), "./test-title", "<h1>Heading 1</h1>", time.Now(), "10")
+	pageBefore := newPage("PageBefore", nil, "<h1>Heading 1</h1>", time.Now(), "./test-title", time.Now(), "10")
 	time.Sleep(100)
-	pageAfter := newPage("PageAfter", nil, "test", time.Now(), "./test-title", "<h1>Heading 1</h1>", time.Now(), "10")
+	pageAfter := newPage("PageAfter", nil, "<h1>Heading 1</h1>", time.Now(), "./test-title", time.Now(), "10")
 
 	cases := []struct {
 		before, after *Page
