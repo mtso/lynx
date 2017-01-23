@@ -8,6 +8,10 @@ import (
 const (
 	IndexTemplateName = "index.html"
 	defaultExportDir  = "public"
+
+	// For use later:
+	defaultContentDir  = "content"
+	defaultTemplateDir = "template"
 )
 
 // GenerateWith reads files from content and template directories to export
@@ -33,29 +37,29 @@ func GenerateWith(config Configuration) (err error) {
 	// Copy static files
 	err = copyFromTo("./template/css/default.css", "./public/css/style.css")
 
-	// Load content Pages
-	Pages, err := loadPagesIn("content")
+	// Load content pages
+	pages, err := loadPagesIn("content")
 	if err != nil {
 		return
 	}
 
 	path := filepath.Join("template", "post.html")
-	if err = Pages.loadTemplate(path); err != nil {
+	if err = pages.loadTemplate(path); err != nil {
 		return
 	}
 
-	// Sort Pages in reverse chronological order
-	Pages = Pages.reverseChronological()
-	Pages.relinkNext()
+	// Sort pages in reverse chronological order
+	pages = pages.reverseChronological()
+	pages.relinkNext()
 
 	// Execute template
-	Pages.executeTemplate()
+	pages.executeTemplate()
 
-	// Save content Pages
-	err = Pages.exportTo(exportDir)
+	// Save content pages
+	err = pages.exportTo(exportDir)
 
 	// Generate Index Page
-	Index := newIndex(config.Title, config.Description, Pages)
+	Index := newIndex(config.Title, config.Description, pages)
 	IndexTemplatePath := filepath.Join("template", IndexTemplateName)
 	if err = Index.loadTemplate(IndexTemplatePath); err != nil {
 		return

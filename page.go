@@ -122,7 +122,7 @@ func loadPagesIn(dirname string) (Pages, error) {
 		return nil, err
 	}
 
-	Pages := make(Pages, 0)
+	pages := make(Pages, 0)
 	var prev *Page = nil
 	for _, file := range files {
 		if !isMarkdownExtension(file.Name()) {
@@ -196,10 +196,10 @@ func loadPagesIn(dirname string) (Pages, error) {
 		)
 		prev = newPage // Assign previous pointer to current Page
 
-		Pages = append(Pages, *newPage)
+		pages = append(pages, *newPage)
 	}
 
-	return Pages, nil
+	return pages, nil
 }
 
 func titleFromFilename(filename string) (t string) {
