@@ -16,7 +16,7 @@ func Test_pageOperations(t *testing.T) {
 	}
 
 	pages.chronological()
-	lastPage := &pages[len(pages) - 1]
+	lastPage := &pages[len(pages)-1]
 	if !firstPage.isCreatedBefore(*lastPage) {
 		t.Errorf("FAILED [sorts pages chronologically] expected %q to be before %q", firstPage.BirthTime, lastPage.BirthTime)
 	}

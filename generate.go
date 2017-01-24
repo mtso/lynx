@@ -3,8 +3,7 @@ package lynx
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/mtso/lynx/bolo"
+	// "github.com/mtso/lynx/bolo"
 )
 
 const (
@@ -39,8 +38,8 @@ func GenerateWith(config Configuration) (err error) {
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
 	// TESTING OUT TEMPLATE PACKAGE //
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-	mkdirIfNone("./public/css")
-	writeStringToFile(lynxtemplate.Css[0], "./public/css/tester.css")
+	// mkdirIfNone("./public/css")
+	// writeStringToFile(lynxtemplate.Css[0], "./public/css/tester.css")
 
 	// Copy static files
 	err = copyFromTo("./template/css/default.css", "./public/css/style.css")

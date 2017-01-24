@@ -1,10 +1,10 @@
 package lynx
 
 import (
-	"log"
-	"path/filepath"
 	"io/ioutil"
+	"log"
 	"os"
+	"path/filepath"
 )
 
 func stripExt(path string) string {
@@ -53,7 +53,7 @@ func isMarkdownExtension(filename string) bool {
 
 func writeStringToFile(buffer, filepath string) {
 	data := []byte(buffer)
-	err :=  ioutil.WriteFile(filepath, data, os.ModePerm)
+	err := ioutil.WriteFile(filepath, data, os.ModePerm)
 	if err != nil {
 		panic(err)
 	}
