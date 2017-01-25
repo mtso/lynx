@@ -43,33 +43,46 @@ func (p Pages) reverseChronological() Pages {
 	return p
 }
 
-func (Pages Pages) loadTemplate(filepath string) error {
+func (p Pages) loadTemplateRaw(src string) error {
+	t, err := template.New("post").Parse(src)
+	if err != nil {
+		return nil
+	}
+
+	for i := range p {
+		p[i].template = t
+	}
+
+	return nil
+}
+
+func (p Pages) loadTemplate(filepath string) error {
 	t, err := template.ParseFiles(filepath)
 	if err != nil {
 		return err
 	}
 
 	// Execute on Page value by Index
-	for i := range Pages {
-		Pages[i].template = t
+	for i := range p {
+		p[i].template = t
 	}
 
 	return nil
 }
 
 // USE THIS: https://golang.org/pkg/html/template/#hdr-Typed_Strings
-func (Pages Pages) executeTemplate() {
-	for i := range Pages {
-		t := Pages[i].template
-		if err := t.Execute(&Pages[i], Pages[i]); err != nil {
+func (p Pages) executeTemplate() {
+	for i := range p {
+		t := p[i].template
+		if err := t.Execute(&p[i], p[i]); err != nil {
 			log.Println(err)
 		}
 	}
 }
 
-func (Pages Pages) exportTo(dirname string) (err error) {
+func (pages Pages) exportTo(dirname string) (err error) {
 
-	for _, p := range Pages {
+	for _, p := range pages {
 		// Skip Pages that have not executed their template
 		if len(p.html) == 0 {
 			continue

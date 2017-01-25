@@ -50,6 +50,14 @@ func GenerateWith(config Configuration) (err error) {
 		return
 	}
 
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+	// TESTING OUT TEMPLATE PACKAGE //
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+	// err = pages.loadTemplateRaw(lynxtemplate.PostTemplate)
+	// if err != nil {
+	// 	return
+	// }
+
 	path := filepath.Join("template", "post.html")
 	if err = pages.loadTemplate(path); err != nil {
 		return
