@@ -90,6 +90,7 @@ article {
 
 /* small-screen layout */
 
+/* disable for the moment while using device-width meta
 @media (max-width: 760px) {
 
 	body {
@@ -145,3 +146,4 @@ only screen
 		margin-bottom: 2em;
 	}
 }
+*/
