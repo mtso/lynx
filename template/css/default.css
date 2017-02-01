@@ -90,17 +90,18 @@ article {
 
 /* small-screen layout */
 
-/* disable for the moment while using device-width meta
+/* disable font-sizing for the moment while using device-width meta */
+ 
 @media (max-width: 760px) {
 
-	body {
+	/*body {
 		font-size: 1.4em;
 	}
 
 	.title, 
 	main > ul > li:first-child a {
 		font-size: 5em;
-	}
+	}*/
 
 	main {
 		max-width: 100%;
@@ -119,7 +120,7 @@ only screen
 	and (max-device-width: 736px) 
 	and (-webkit-min-device-pixel-ratio: 3) {
 
-	body {
+	/*body {
 		font-size: 2em;
 	}
 
@@ -137,7 +138,7 @@ only screen
 	ul > li > a,
 	footer {
 		font-size: 2em;
-	}
+	}*/
 
 	main {
 		max-width: 100%;
@@ -146,4 +147,3 @@ only screen
 		margin-bottom: 2em;
 	}
 }
-*/
